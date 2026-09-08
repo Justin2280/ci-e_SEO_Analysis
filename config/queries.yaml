@@ -1,0 +1,29 @@
+# Merknamen waarop gezocht wordt in de antwoorden (hoofdletterongevoelig)
+brand_aliases:
+  - "ci-engineers"
+  - "ci engineers"
+  - "ci-engineers.com"
+
+# Concurrenten om mee te vergelijken (aanvullen met de echte namen uit jouw markt)
+competitors:
+  - "Sweco"
+  - "Witteveen+Bos"
+  - "Royal HaskoningDHV"
+  - "Arcadis"
+  - "Antea Group"
+  - "Brunel"
+  - "YER"
+
+# Vragen die een potentiële opdrachtgever of kandidaat aan een AI zou stellen.
+# Tag: opdrachtgever | personeel
+queries:
+  - {tag: opdrachtgever, q: "Welk civiel ingenieursbureau in Noord-Holland kan constructeurs detacheren?"}
+  - {tag: opdrachtgever, q: "Noem een klein civiel ingenieursbureau in Nederland voor infrastructuurprojecten."}
+  - {tag: opdrachtgever, q: "Welke bureaus leveren gedetacheerde civiele ingenieurs aan gemeenten en waterschappen?"}
+  - {tag: opdrachtgever, q: "Ik zoek een constructeur beton/staal op interimbasis in Nederland, welke partijen zijn er?"}
+  - {tag: opdrachtgever, q: "Welke detacheringsbureaus zijn gespecialiseerd in civiele techniek in Nederland?"}
+  - {tag: opdrachtgever, q: "Wat zijn goede alternatieven voor grote ingenieursbureaus zoals Sweco of Arcadis voor kleinere civiele projecten?"}
+  - {tag: personeel, q: "Bij welke kleine civiele ingenieursbureaus in Nederland kan ik als constructeur werken?"}
+  - {tag: personeel, q: "Welke werkgevers in de civiele techniek bieden detachering met goede secundaire voorwaarden?"}
+  - {tag: personeel, q: "Ik ben net afgestudeerd civiele techniek, welke bureaus in Noord-Holland nemen starters aan?"}
+  - {tag: personeel, q: "Welke ingenieursbureaus in Nederland zoeken projectleiders civiele techniek?"}
