@@ -30,3 +30,12 @@ def test_missing_keys():
     assert one_provider["ai_visibility (minimaal één provider)"] == []
     gsc = missing_keys({"GSC_SERVICE_ACCOUNT_FILE": "config/bestaat-niet.json", "GSC_SITE_URL": "sc-domain:x"})
     assert gsc["search_console"] == ["GSC_SERVICE_ACCOUNT_FILE (bestand niet gevonden)"]
+
+
+def test_missing_keys_email_either_route():
+    from src.common import missing_keys
+
+    graph = missing_keys({"MS_TENANT_ID": "t", "MS_CLIENT_ID": "c", "MS_CLIENT_SECRET": "s",
+                          "REPORT_EMAIL_FROM": "a@x.nl", "REPORT_EMAIL_TO": "b@x.nl"})
+    assert graph["report --email (Microsoft 365 / Graph)"] == [] and graph["report --email (SMTP, alternatief)"] == []
+    assert "MS_TENANT_ID" in missing_keys({})["report --email (Microsoft 365 / Graph)"]

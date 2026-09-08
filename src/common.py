@@ -84,7 +84,9 @@ ENV_KEYS: dict[str, list[str]] = {
     "ai_visibility (minimaal één provider)": ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY"],
     "search_console": ["GSC_SERVICE_ACCOUNT_FILE", "GSC_SITE_URL"],
     "wp_client (schrijven)": ["WP_USERNAME", "WP_APP_PASSWORD"],
-    "report --email": ["SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD", "REPORT_EMAIL_TO"],
+    "report --email (Microsoft 365 / Graph)": ["MS_TENANT_ID", "MS_CLIENT_ID", "MS_CLIENT_SECRET",
+                                              "REPORT_EMAIL_FROM", "REPORT_EMAIL_TO"],
+    "report --email (SMTP, alternatief)": ["SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD", "REPORT_EMAIL_TO"],
 }
 
 
@@ -96,6 +98,11 @@ def missing_keys(env: dict[str, str]) -> dict[str, list[str]]:
         missing = [k for k in keys if not (env.get(k) or "").strip()]
         if module.startswith("ai_visibility") and len(missing) < len(keys):
             missing = []
+        if module.startswith("report --email"):
+            graph_ok = all((env.get(k) or "").strip() for k in ENV_KEYS["report --email (Microsoft 365 / Graph)"])
+            smtp_ok = all((env.get(k) or "").strip() for k in ENV_KEYS["report --email (SMTP, alternatief)"])
+            if graph_ok or smtp_ok:
+                missing = []  # één van de twee routes is genoeg
         if module == "search_console" and "GSC_SERVICE_ACCOUNT_FILE" not in missing:
             path = Path(env["GSC_SERVICE_ACCOUNT_FILE"])
             if not (path if path.is_absolute() else ROOT / path).exists():
