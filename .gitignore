@@ -5,3 +5,4 @@ data/results/*.jsonl
 data/reports/*.md
 config/*service-account*.json
 .pytest_cache/
+data/run_weekly.log
