@@ -12,6 +12,8 @@
 
 - Waarom: De pagina bevat uitsluitend contactgegevens en een contactformulier, dus de omschrijving noemt telefoon, e-mail, locatie en formulier.
 
+- ✔ Toegepast op 2026-09-08T09:38:29+00:00
+
 ## Privacy Policy  (id 3, pages)
 
 - Pagina: https://ci-engineers.com/privacy-policy/
@@ -21,6 +23,8 @@
 > In dit privacy statement leest u welke persoonsgegevens CI-Engineers verwerkt, waarvoor wij ze gebruiken en hoe u inzage of verwijdering aanvraagt.
 
 - Waarom: De omschrijving vat de inhoud van de privacyverklaring samen: welke gegevens wij verwerken, met welk doel en welke rechten bezoekers hebben.
+
+- ✔ Toegepast op 2026-09-08T09:38:30+00:00
 
 ## BIM-Modelleur  (id 1030, pages)
 
@@ -32,6 +36,8 @@
 
 - Waarom: De omschrijving noemt de functie, het dienstverband en de concrete BIM-software uit de paginatekst, zodat sollicitanten direct zien wat de rol inhoudt.
 
+- ✔ Toegepast op 2026-09-08T09:38:32+00:00
+
 ## Constructeur  (id 630, pages)
 
 - Pagina: https://ci-engineers.com/werken-bij-ci/constructeur/
@@ -41,6 +47,8 @@
 > Als constructeur bij CI-Engineers maak je constructieve ontwerpen en berekeningen voor civiele infraprojecten. Hybride, 32-40 uur. Solliciteer direct.
 
 - Waarom: De omschrijving benoemt de kern van de vacature (constructieve ontwerpen en berekeningen voor civiele projecten), de arbeidsvoorwaarden hybride en 32-40 uur en nodigt uit tot solliciteren.
+
+- ✔ Toegepast op 2026-09-08T09:38:34+00:00
 
 ## Ontwerpleider  (id 1042, pages)
 
@@ -52,6 +60,8 @@
 
 - Waarom: De omschrijving benoemt de functie, de kern van de rol en de arbeidsvoorwaarden uit de vacaturetekst en nodigt uit tot solliciteren.
 
+- ✔ Toegepast op 2026-09-08T09:38:36+00:00
+
 ## Amstel Hotel Kademuur Stabilisatie  (id 1097, posts)
 
 - Pagina: https://ci-engineers.com/amstel-hotel-kademuur-stabilisatie/
@@ -61,6 +71,8 @@
 > Onderzoek en stabilisatie van de kademuur achter het Amstel Hotel met Buoycrete. CI-Engineers bemiddelt tussen opdrachtgever, aannemer en partijen.
 
 - Waarom: De omschrijving benoemt het project, de toegepaste methode en de concrete rol van CI-Engineers zoals beschreven op de pagina.
+
+- ✔ Toegepast op 2026-09-08T09:38:38+00:00
 
 ## Amstelveenlijn  (id 1316, posts)
 
@@ -72,6 +84,8 @@
 
 - Waarom: De omschrijving benoemt het project en onze concrete rol (Revit 3D-ontwerp van haltes en ongelijkvloerse kruispunten) zoals op de pagina vermeld.
 
+- ✔ Toegepast op 2026-09-08T09:38:39+00:00
+
 ## Biobrandstoffen faciliteit Shell  (id 1096, posts)
 
 - Pagina: https://ci-engineers.com/biobrandstoffen-faciliteit-shell/
@@ -81,6 +95,8 @@
 > CI-Engineers ontwerpt met Worley de draagconstructies, platforms en fundatie voor de HVO-biobrandstoffen faciliteit van Shell in Pernis.
 
 - Waarom: De omschrijving benoemt kort de opdrachtgever, de locatie en het concrete constructiewerk dat CI-Engineers op deze projectpagina uitvoert.
+
+- ✔ Toegepast op 2026-09-08T09:38:41+00:00
 
 ## Blankenburgverbinding  (id 1314, posts)
 
@@ -92,6 +108,8 @@
 
 - Waarom: De omschrijving benoemt het project en exact de rol die CI-Engineers volgens de paginatekst vervult.
 
+- ✔ Toegepast op 2026-09-08T09:38:43+00:00
+
 ## Brandbestrijdingssysteem Argent Energy  (id 1179, posts)
 
 - Pagina: https://ci-engineers.com/brandbestrijdingssysteem-argent-energy/
@@ -101,6 +119,8 @@
 > CI-Engineers ontwerpt voor Argent Energy de fundering van een brandbestrijdingspomphuis met twee bluswatertanks, inclusief 3D-model in Revit.
 
 - Waarom: De omschrijving benoemt de opdrachtgever, het ontwerp van pomphuisfundering en bluswatertanks en onze concrete rol met Revit, precies zoals op de pagina staat.
+
+- ✔ Toegepast op 2026-09-08T09:38:44+00:00
 
 ## Bruggen en paviljoens Strandeiland  (id 145, posts)
 
@@ -112,6 +132,8 @@
 
 - Waarom: De omschrijving benoemt het project op Strandeiland, onze concrete as-built rol en de betrokken partijen zoals in de paginatekst staat.
 
+- ✔ Toegepast op 2026-09-08T09:38:46+00:00
+
 ## Çanakkale brug  (id 1190, posts)
 
 - Pagina: https://ci-engineers.com/canakkale-brug/
@@ -121,6 +143,8 @@
 > Voor de Çanakkale brug, de grootste hangbrug ter wereld, verzorgt CI-Engineers de faseringstekeningen voor transport en afzinken van de caissons.
 
 - Waarom: De omschrijving noemt het project, de kernrol van CI-Engineers (faseringstekeningen caissons) en het onderscheidende feit dat het de grootste hangbrug ter wereld wordt, allemaal uit de paginatekst.
+
+- ✔ Toegepast op 2026-09-08T09:38:47+00:00
 
 ## CI-engineers is lid geworden van NLingenieurs  (id 1370, posts)
 
@@ -132,6 +156,8 @@
 
 - Waarom: De omschrijving benoemt het nieuwsfeit uit de paginatekst en de drie thema's die het artikel noemt: kennisdeling, innovatie en samenwerking.
 
+- ✔ Toegepast op 2026-09-08T09:38:49+00:00
+
 ## De Groene Boog  (id 1317, posts)
 
 - Pagina: https://ci-engineers.com/de-groene-boog/
@@ -141,6 +167,8 @@
 > Voor De Groene Boog (nieuwe A16 bij Rotterdam) verzorgen wij als CI-Engineers de modellering van de landtunnel in Revit 3D voor Rijkswaterstaat.
 
 - Waarom: De omschrijving noemt de projectnaam, de locatie en onze concrete rol (Revit 3D-modellering van de landtunnel) zoals op de pagina beschreven.
+
+- ✔ Toegepast op 2026-09-08T09:38:50+00:00
 
 ## De Oosterweelverbinding  (id 1174, posts)
 
@@ -152,6 +180,8 @@
 
 - Waarom: De omschrijving benoemt het projectnaam, de locatie en onze concrete constructieve rol, precies zoals op de pagina beschreven.
 
+- ✔ Toegepast op 2026-09-08T09:38:52+00:00
+
 ## EdesPoort OVT  (id 1180, posts)
 
 - Pagina: https://ci-engineers.com/edespoort-ovt/
@@ -161,6 +191,8 @@
 > OV-knoop Ede: vernieuwing van station Ede-Wageningen met twee tunnels, een langzaamverkeersbrug en nieuwe perrons. Project van CI-Engineers voor ProRail.
 
 - Waarom: De omschrijving benoemt de projectnaam, de concrete scope-onderdelen en de opdrachtgever zoals die op de pagina staan.
+
+- ✔ Toegepast op 2026-09-08T09:38:54+00:00
 
 ## Fietsbrug Hoorn  (id 1187, posts)
 
@@ -172,6 +204,8 @@
 
 - Waarom: De omschrijving noemt opdrachtgever, locatie en het hybride composiet ontwerp, precies de kern van deze projectpagina.
 
+- ✔ Toegepast op 2026-09-08T09:38:56+00:00
+
 ## Fietsenstalling IJboulevard 2022  (id 1183, posts)
 
 - Pagina: https://ci-engineers.com/fietsenstalling-ijboulevard-2022/
@@ -181,6 +215,8 @@
 > Ondergrondse fietsenstalling IJboulevard bij Amsterdam CS: plek voor 4000 fietsen. CI-Engineers modelleert de afbouw en constructievraagstukken.
 
 - Waarom: De omschrijving benoemt het waterbouwkundige project, de locatie en capaciteit en onze concrete rol in het uitvoeringsontwerp, zoals in de paginatekst staat.
+
+- ✔ Toegepast op 2026-09-08T09:38:57+00:00
 
 ## Hello world!  (id 1, posts)
 
@@ -192,6 +228,8 @@
 
 - Waarom: De pagina is het standaard eerste WordPress-bericht, dus de omschrijving benoemt dat feitelijk en verwijst naar onze nieuws-, project- en vacaturepagina's.
 
+- ✔ Toegepast op 2026-09-08T09:38:59+00:00
+
 ## Herinrichting N-516 Thorbeckeweg Zaandam  (id 1090, posts)
 
 - Pagina: https://ci-engineers.com/herinrichting-n-516-thorbeckeweg-zaandam/
@@ -201,6 +239,8 @@
 > Herinrichting N516 Thorbeckeweg Zaandam: ongelijkvloerse kruising Vijfhoek, extra rijstroken en veilige fietsroutes. Bekijk dit project van CI-Engineers.
 
 - Waarom: De omschrijving benoemt de projectnaam en de concrete maatregelen uit de paginatekst, met de belangrijkste zoekterm vooraan en CI-Engineers als uitvoerende partij.
+
+- ✔ Toegepast op 2026-09-08T09:39:01+00:00
 
 ## Herstel Kademuren Amsterdam  (id 1175, posts)
 
@@ -212,6 +252,8 @@
 
 - Waarom: De omschrijving benoemt kort de projectopgave, onze rol met Revit-modellen en de opdrachtgever, precies zoals op de pagina beschreven.
 
+- ✔ Toegepast op 2026-09-08T09:39:03+00:00
+
 ## Kademuurbouw Amaliahaven  (id 1178, posts)
 
 - Pagina: https://ci-engineers.com/kademuurbouw-amaliahaven/
@@ -221,6 +263,8 @@
 > CI-Engineers modelleert de tijdelijke hulpconstructies en verzorgt de bouwplaattekeningen voor de kademuurbouw in de Prinses Amaliahaven.
 
 - Waarom: De omschrijving noemt de projectnaam en precies de rol die CI-Engineers volgens de paginatekst vervult.
+
+- ✔ Toegepast op 2026-09-08T09:39:05+00:00
 
 ## Keersluis Kornwerderzand  (id 1177, posts)
 
@@ -232,6 +276,8 @@
 
 - Waarom: De omschrijving benoemt het project en onze concrete rol in het betonontwerp, precies zoals de paginatekst beschrijft.
 
+- ✔ Toegepast op 2026-09-08T09:39:06+00:00
+
 ## Leuvekolk Vispassage  (id 1186, posts)
 
 - Pagina: https://ci-engineers.com/leuvekolk-vispassage/
@@ -241,6 +287,8 @@
 > Voor de vispassage Leuvekolk in Rotterdam werkten wij de vorm- en wapeningstekeningen uit van de betonnen bassins. Lees meer bij CI-Engineers.
 
 - Waarom: De omschrijving noemt de projectnaam, locatie en de concrete rol van CI-Engineers zoals die in de paginatekst staat.
+
+- ✔ Toegepast op 2026-09-08T09:39:08+00:00
 
 ## Nieuwe Afsluitdijk  (id 1318, posts)
 
@@ -252,6 +300,8 @@
 
 - Waarom: De omschrijving noemt de projectnaam en de concrete werkzaamheden van CI-Engineers die in de paginatekst staan.
 
+- ✔ Toegepast op 2026-09-08T09:39:10+00:00
+
 ## Onderdoorgang Vierpaardjes Venlo  (id 1089, posts)
 
 - Pagina: https://ci-engineers.com/onderdoorgang-vierpaardjes-venlo/
@@ -261,6 +311,8 @@
 > Voor de onderdoorgang Vierpaardjes in Venlo verzorgen wij als CI-Engineers de as-built tekeningen in AutoCAD van paviljoens en inritten.
 
 - Waarom: De omschrijving noemt de projectnaam en onze concrete rol (as-built tekeningen in AutoCAD voor paviljoens en inritten) zoals op de pagina beschreven.
+
+- ✔ Toegepast op 2026-09-08T09:39:11+00:00
 
 ## OVT Zuid  (id 1176, posts)
 
@@ -272,6 +324,8 @@
 
 - Waarom: De omschrijving benoemt concreet onze rol op OVT Zuid (metrodekken en tijdelijke constructies in Station Amsterdam Zuid) zoals beschreven in de paginatekst.
 
+- ✔ Toegepast op 2026-09-08T09:39:13+00:00
+
 ## Petrokemia  (id 1313, posts)
 
 - Pagina: https://ci-engineers.com/petrokemia/
@@ -281,6 +335,8 @@
 > CI-Engineers renoveert voor Technip Benelux de fundatie van een geïsoleerde Cold Box in een ethyleenraffinaderij: onderzoek en toetsing.
 
 - Waarom: De omschrijving benoemt kort de opdrachtgever, het object en de rol van CI-Engineers zoals die op de projectpagina staan.
+
+- ✔ Toegepast op 2026-09-08T09:39:14+00:00
 
 ## Prinses Alexiaviaduct  (id 1095, posts)
 
@@ -292,6 +348,8 @@
 
 - Waarom: De omschrijving noemt het project, de locatie en precies de werkzaamheden die CI-Engineers volgens de paginatekst uitvoert.
 
+- ✔ Toegepast op 2026-09-08T09:39:16+00:00
+
 ## Reconstructie Knooppunt De Nieuwe Meer  (id 1092, posts)
 
 - Pagina: https://ci-engineers.com/reconstructie-knooppunt-de-nieuwe-meer/
@@ -301,6 +359,8 @@
 > Bij de reconstructie van Knooppunt De Nieuwe Meer (Zuidasdok) verzorgen wij als CI-Engineers het ontwerp, 3D-modellering en tekenwerk van de grondkeringen.
 
 - Waarom: De omschrijving benoemt het project, het programma Zuidasdok en onze concrete rol bij de grondkeringen, precies zoals op de pagina staat.
+
+- ✔ Toegepast op 2026-09-08T09:39:18+00:00
 
 ## Reconstructie N211 Wippolderlaan  (id 1098, posts)
 
@@ -312,6 +372,8 @@
 
 - Waarom: De omschrijving noemt de projectnaam als zoekterm en vat onze concrete ontwerprol en de technische kenmerken uit de paginatekst samen.
 
+- ✔ Toegepast op 2026-09-08T09:39:19+00:00
+
 ## Renovatie Krammersluizen  (id 1094, posts)
 
 - Pagina: https://ci-engineers.com/renovatie-krammersluizen/
@@ -321,6 +383,8 @@
 > CI-Engineers werkt aan de renovatie van de Krammersluizen: ontwerpuitwerking in de VO-fase voor bouwcombinatie ZEEKR en Rijkswaterstaat.
 
 - Waarom: De omschrijving benoemt de projectnaam, onze concrete rol (ontwerpen uitwerken in de VO-fase) en de betrokken partijen die letterlijk op de pagina staan.
+
+- ✔ Toegepast op 2026-09-08T09:39:21+00:00
 
 ## RijnlandRoute  (id 1182, posts)
 
@@ -332,6 +396,8 @@
 
 - Waarom: De omschrijving benoemt het project, onze concrete rol in het uitvoeringsontwerp en de locatie, precies zoals op de pagina beschreven.
 
+- ✔ Toegepast op 2026-09-08T09:39:32+00:00
+
 ## SAAone  (id 1188, posts)
 
 - Pagina: https://ci-engineers.com/saaone/
@@ -341,6 +407,8 @@
 > Bij het SAAone project (weguitbreiding A1/A6) verzorgden wij van CI-Engineers het 3D-modelleerwerk voor kunstwerken en het aquaduct onder de Vecht.
 
 - Waarom: De omschrijving benoemt het project, de A1/A6-weguitbreiding en precies de rol die CI-Engineers volgens de paginatekst had.
+
+- ✔ Toegepast op 2026-09-08T09:39:41+00:00
 
 ## Selectieve Onttrekking IJmuiden  (id 1184, posts)
 
@@ -352,6 +420,8 @@
 
 - Waarom: De omschrijving noemt de projectnaam, onze rol sinds 2021 en de belangrijkste constructieonderdelen die letterlijk in de paginatekst staan.
 
+- ✔ Toegepast op 2026-09-08T09:39:46+00:00
+
 ## Snoekjesbrug  (id 1091, posts)
 
 - Pagina: https://ci-engineers.com/snoekjesbrug/
@@ -361,6 +431,8 @@
 > Wij herstellen de fundering van de historische Snoekjesbrug in Amsterdam met schroefinjectiepalen. Lees hoe CI-Engineers dit project aanpakt.
 
 - Waarom: De pagina beschrijft de historie van de Snoekjesbrug en het funderingsherstel met schroefinjectiepalen, wat in de omschrijving concreet wordt benoemd.
+
+- ✔ Toegepast op 2026-09-08T09:39:54+00:00
 
 ## Tweede Coentunnel  (id 1189, posts)
 
@@ -372,6 +444,8 @@
 
 - Waarom: De omschrijving noemt de projectnaam, de locatie en precies de bijdrage die onze medewerkers volgens de paginatekst leverden.
 
+- ✔ Toegepast op 2026-09-08T09:39:58+00:00
+
 ## Verbreding A27  (id 1171, posts)
 
 - Pagina: https://ci-engineers.com/verbreding-a27/
@@ -381,6 +455,8 @@
 > CI-Engineers werkt mee aan de verbreding van de A27: we modelleren bestaande viaducten en werken aan het schetsontwerp volgens de twee-fasen aanpak.
 
 - Waarom: De omschrijving benoemt het project, de opdracht van CI-Engineers (viaducten modelleren en schetsontwerp) en de twee-fasen aanpak, precies zoals op de pagina staat.
+
+- ✔ Toegepast op 2026-09-08T09:40:00+00:00
 
 ## Verbreding en verdieping A9 Badhoevedorp  (id 1173, posts)
 
@@ -392,6 +468,8 @@
 
 - Waarom: De omschrijving benoemt de projectnaam, de opdrachtsituatie met VeenIX en de concrete ontwerponderdelen die CI-Engineers volgens de paginatekst heeft verzorgd.
 
+- ✔ Toegepast op 2026-09-08T09:40:04+00:00
+
 ## Verlegging Schijnkoker Ringweg R1  (id 1181, posts)
 
 - Pagina: https://ci-engineers.com/verlegging-schijnkoker-ringweg-r1/
@@ -401,6 +479,8 @@
 > Voor de verlegging van de schijnkoker langs Ringweg R1 in Merksem ontwierp CI-Engineers koppelconstructies, staalconstructies en bouwkuipen.
 
 - Waarom: De omschrijving noemt de projectnaam, de locatie en precies de werkzaamheden die CI-Engineers volgens de paginatekst heeft uitgevoerd.
+
+- ✔ Toegepast op 2026-09-08T09:40:07+00:00
 
 ## Vernieuwde N31  (id 1312, posts)
 
@@ -412,6 +492,8 @@
 
 - Waarom: De omschrijving noemt het project, de locatie en de concrete bijdrage van CI-Engineers zoals beschreven op de pagina.
 
+- ✔ Toegepast op 2026-09-08T09:40:09+00:00
+
 ## Vervanging van viaducten en brug op de A44  (id 1093, posts)
 
 - Pagina: https://ci-engineers.com/vervanging-van-viaducten-en-brug-op-de-a44/
@@ -421,6 +503,8 @@
 > CI-Engineers maakt het voorlopig en definitief ontwerp van viaduct Hoofdvaart en de Kaagbrug voor de vervanging van kunstwerken op de A44.
 
 - Waarom: De omschrijving noemt de kern van de pagina: onze VO- en DO-werkzaamheden aan twee kunstwerken binnen het vervangingsproject op de A44.
+
+- ✔ Toegepast op 2026-09-08T09:40:11+00:00
 
 ## Wegverbreding A2 Het Vonderen-Kerensheide  (id 1172, posts)
 
@@ -432,6 +516,8 @@
 
 - Waarom: De omschrijving benoemt het project en onze concrete bijdrage aan de kunstwerken, precies zoals in de paginatekst staat.
 
+- ✔ Toegepast op 2026-09-08T09:40:13+00:00
+
 ## Westrandweg  (id 1185, posts)
 
 - Pagina: https://ci-engineers.com/westrandweg/
@@ -442,6 +528,8 @@
 
 - Waarom: De omschrijving noemt het project, de locatie en de concrete rol van CI-Engineers zoals beschreven op de pagina.
 
+- ✔ Toegepast op 2026-09-08T09:40:15+00:00
+
 ## Zuidasdok  (id 1315, posts)
 
 - Pagina: https://ci-engineers.com/zuidasdok/
@@ -451,3 +539,5 @@
 > Bij het project Zuidasdok modelleert CI-Engineers in Revit 3D het dragende deel van het spoor voor de Minervapassage en Brittenpassage.
 
 - Waarom: De omschrijving noemt de projectnaam als zoekterm en beschrijft feitelijk de concrete rol van CI-Engineers zoals die op de pagina staat.
+
+- ✔ Toegepast op 2026-09-08T09:40:16+00:00

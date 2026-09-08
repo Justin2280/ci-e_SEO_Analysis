@@ -10,7 +10,8 @@
     "focus_keyword": "contact ci-engineers",
     "reason": "De pagina bevat uitsluitend contactgegevens en een contactformulier, dus de omschrijving noemt telefoon, e-mail, locatie en formulier.",
     "warnings": [],
-    "created": "2026-09-08T09:27:27+00:00"
+    "created": "2026-09-08T09:27:27+00:00",
+    "applied_at": "2026-09-08T09:38:29+00:00"
   },
   {
     "id": 3,
@@ -23,7 +24,8 @@
     "focus_keyword": "privacy statement",
     "reason": "De omschrijving vat de inhoud van de privacyverklaring samen: welke gegevens wij verwerken, met welk doel en welke rechten bezoekers hebben.",
     "warnings": [],
-    "created": "2026-09-08T09:27:31+00:00"
+    "created": "2026-09-08T09:27:31+00:00",
+    "applied_at": "2026-09-08T09:38:30+00:00"
   },
   {
     "id": 1030,
@@ -36,7 +38,8 @@
     "focus_keyword": "bim-modelleur vacature",
     "reason": "De omschrijving noemt de functie, het dienstverband en de concrete BIM-software uit de paginatekst, zodat sollicitanten direct zien wat de rol inhoudt.",
     "warnings": [],
-    "created": "2026-09-08T09:27:36+00:00"
+    "created": "2026-09-08T09:27:36+00:00",
+    "applied_at": "2026-09-08T09:38:32+00:00"
   },
   {
     "id": 630,
@@ -49,7 +52,8 @@
     "focus_keyword": "vacature constructeur",
     "reason": "De omschrijving benoemt de kern van de vacature (constructieve ontwerpen en berekeningen voor civiele projecten), de arbeidsvoorwaarden hybride en 32-40 uur en nodigt uit tot solliciteren.",
     "warnings": [],
-    "created": "2026-09-08T09:27:44+00:00"
+    "created": "2026-09-08T09:27:44+00:00",
+    "applied_at": "2026-09-08T09:38:34+00:00"
   },
   {
     "id": 1042,
@@ -62,7 +66,8 @@
     "focus_keyword": "vacature ontwerpleider",
     "reason": "De omschrijving benoemt de functie, de kern van de rol en de arbeidsvoorwaarden uit de vacaturetekst en nodigt uit tot solliciteren.",
     "warnings": [],
-    "created": "2026-09-08T09:27:49+00:00"
+    "created": "2026-09-08T09:27:49+00:00",
+    "applied_at": "2026-09-08T09:38:36+00:00"
   },
   {
     "id": 1097,
@@ -75,7 +80,8 @@
     "focus_keyword": "kademuur stabilisatie",
     "reason": "De omschrijving benoemt het project, de toegepaste methode en de concrete rol van CI-Engineers zoals beschreven op de pagina.",
     "warnings": [],
-    "created": "2026-09-08T09:27:53+00:00"
+    "created": "2026-09-08T09:27:53+00:00",
+    "applied_at": "2026-09-08T09:38:38+00:00"
   },
   {
     "id": 1316,
@@ -88,7 +94,8 @@
     "focus_keyword": "amstelveenlijn",
     "reason": "De omschrijving benoemt het project en onze concrete rol (Revit 3D-ontwerp van haltes en ongelijkvloerse kruispunten) zoals op de pagina vermeld.",
     "warnings": [],
-    "created": "2026-09-08T09:27:57+00:00"
+    "created": "2026-09-08T09:27:57+00:00",
+    "applied_at": "2026-09-08T09:38:39+00:00"
   },
   {
     "id": 1096,
@@ -101,7 +108,8 @@
     "focus_keyword": "biobrandstoffen faciliteit shell",
     "reason": "De omschrijving benoemt kort de opdrachtgever, de locatie en het concrete constructiewerk dat CI-Engineers op deze projectpagina uitvoert.",
     "warnings": [],
-    "created": "2026-09-08T09:28:05+00:00"
+    "created": "2026-09-08T09:28:05+00:00",
+    "applied_at": "2026-09-08T09:38:41+00:00"
   },
   {
     "id": 1314,
@@ -114,7 +122,8 @@
     "focus_keyword": "blankenburgverbinding",
     "reason": "De omschrijving benoemt het project en exact de rol die CI-Engineers volgens de paginatekst vervult.",
     "warnings": [],
-    "created": "2026-09-08T09:28:12+00:00"
+    "created": "2026-09-08T09:28:12+00:00",
+    "applied_at": "2026-09-08T09:38:43+00:00"
   },
   {
     "id": 1179,
@@ -127,7 +136,8 @@
     "focus_keyword": "brandbestrijdingssysteem argent energy",
     "reason": "De omschrijving benoemt de opdrachtgever, het ontwerp van pomphuisfundering en bluswatertanks en onze concrete rol met Revit, precies zoals op de pagina staat.",
     "warnings": [],
-    "created": "2026-09-08T09:28:28+00:00"
+    "created": "2026-09-08T09:28:28+00:00",
+    "applied_at": "2026-09-08T09:38:44+00:00"
   },
   {
     "id": 145,
@@ -140,7 +150,8 @@
     "focus_keyword": "bruggen strandeiland",
     "reason": "De omschrijving benoemt het project op Strandeiland, onze concrete as-built rol en de betrokken partijen zoals in de paginatekst staat.",
     "warnings": [],
-    "created": "2026-09-08T09:28:33+00:00"
+    "created": "2026-09-08T09:28:33+00:00",
+    "applied_at": "2026-09-08T09:38:46+00:00"
   },
   {
     "id": 1190,
@@ -153,7 +164,8 @@
     "focus_keyword": "çanakkale brug",
     "reason": "De omschrijving noemt het project, de kernrol van CI-Engineers (faseringstekeningen caissons) en het onderscheidende feit dat het de grootste hangbrug ter wereld wordt, allemaal uit de paginatekst.",
     "warnings": [],
-    "created": "2026-09-08T09:28:38+00:00"
+    "created": "2026-09-08T09:28:38+00:00",
+    "applied_at": "2026-09-08T09:38:47+00:00"
   },
   {
     "id": 1370,
@@ -166,7 +178,8 @@
     "focus_keyword": "nlingenieurs lidmaatschap",
     "reason": "De omschrijving benoemt het nieuwsfeit uit de paginatekst en de drie thema's die het artikel noemt: kennisdeling, innovatie en samenwerking.",
     "warnings": [],
-    "created": "2026-09-08T09:28:42+00:00"
+    "created": "2026-09-08T09:28:42+00:00",
+    "applied_at": "2026-09-08T09:38:49+00:00"
   },
   {
     "id": 1317,
@@ -179,7 +192,8 @@
     "focus_keyword": "de groene boog",
     "reason": "De omschrijving noemt de projectnaam, de locatie en onze concrete rol (Revit 3D-modellering van de landtunnel) zoals op de pagina beschreven.",
     "warnings": [],
-    "created": "2026-09-08T09:28:48+00:00"
+    "created": "2026-09-08T09:28:48+00:00",
+    "applied_at": "2026-09-08T09:38:50+00:00"
   },
   {
     "id": 1174,
@@ -192,7 +206,8 @@
     "focus_keyword": "oosterweelverbinding",
     "reason": "De omschrijving benoemt het projectnaam, de locatie en onze concrete constructieve rol, precies zoals op de pagina beschreven.",
     "warnings": [],
-    "created": "2026-09-08T09:28:53+00:00"
+    "created": "2026-09-08T09:28:53+00:00",
+    "applied_at": "2026-09-08T09:38:52+00:00"
   },
   {
     "id": 1180,
@@ -205,7 +220,8 @@
     "focus_keyword": "ov-knoop ede",
     "reason": "De omschrijving benoemt de projectnaam, de concrete scope-onderdelen en de opdrachtgever zoals die op de pagina staan.",
     "warnings": [],
-    "created": "2026-09-08T09:29:04+00:00"
+    "created": "2026-09-08T09:29:04+00:00",
+    "applied_at": "2026-09-08T09:38:54+00:00"
   },
   {
     "id": 1187,
@@ -218,7 +234,8 @@
     "focus_keyword": "fietsbrug hoorn",
     "reason": "De omschrijving noemt opdrachtgever, locatie en het hybride composiet ontwerp, precies de kern van deze projectpagina.",
     "warnings": [],
-    "created": "2026-09-08T09:29:09+00:00"
+    "created": "2026-09-08T09:29:09+00:00",
+    "applied_at": "2026-09-08T09:38:56+00:00"
   },
   {
     "id": 1183,
@@ -231,7 +248,8 @@
     "focus_keyword": "fietsenstalling ijboulevard",
     "reason": "De omschrijving benoemt het waterbouwkundige project, de locatie en capaciteit en onze concrete rol in het uitvoeringsontwerp, zoals in de paginatekst staat.",
     "warnings": [],
-    "created": "2026-09-08T09:29:16+00:00"
+    "created": "2026-09-08T09:29:16+00:00",
+    "applied_at": "2026-09-08T09:38:57+00:00"
   },
   {
     "id": 1,
@@ -244,7 +262,8 @@
     "focus_keyword": "hello world",
     "reason": "De pagina is het standaard eerste WordPress-bericht, dus de omschrijving benoemt dat feitelijk en verwijst naar onze nieuws-, project- en vacaturepagina's.",
     "warnings": [],
-    "created": "2026-09-08T09:29:23+00:00"
+    "created": "2026-09-08T09:29:23+00:00",
+    "applied_at": "2026-09-08T09:38:59+00:00"
   },
   {
     "id": 1090,
@@ -257,7 +276,8 @@
     "focus_keyword": "n516 thorbeckeweg zaandam",
     "reason": "De omschrijving benoemt de projectnaam en de concrete maatregelen uit de paginatekst, met de belangrijkste zoekterm vooraan en CI-Engineers als uitvoerende partij.",
     "warnings": [],
-    "created": "2026-09-08T09:29:34+00:00"
+    "created": "2026-09-08T09:29:34+00:00",
+    "applied_at": "2026-09-08T09:39:01+00:00"
   },
   {
     "id": 1175,
@@ -270,7 +290,8 @@
     "focus_keyword": "herstel kademuren amsterdam",
     "reason": "De omschrijving benoemt kort de projectopgave, onze rol met Revit-modellen en de opdrachtgever, precies zoals op de pagina beschreven.",
     "warnings": [],
-    "created": "2026-09-08T09:29:43+00:00"
+    "created": "2026-09-08T09:29:43+00:00",
+    "applied_at": "2026-09-08T09:39:03+00:00"
   },
   {
     "id": 1178,
@@ -283,7 +304,8 @@
     "focus_keyword": "kademuurbouw amaliahaven",
     "reason": "De omschrijving noemt de projectnaam en precies de rol die CI-Engineers volgens de paginatekst vervult.",
     "warnings": [],
-    "created": "2026-09-08T09:29:53+00:00"
+    "created": "2026-09-08T09:29:53+00:00",
+    "applied_at": "2026-09-08T09:39:05+00:00"
   },
   {
     "id": 1177,
@@ -296,7 +318,8 @@
     "focus_keyword": "keersluis kornwerderzand",
     "reason": "De omschrijving benoemt het project en onze concrete rol in het betonontwerp, precies zoals de paginatekst beschrijft.",
     "warnings": [],
-    "created": "2026-09-08T09:29:59+00:00"
+    "created": "2026-09-08T09:29:59+00:00",
+    "applied_at": "2026-09-08T09:39:06+00:00"
   },
   {
     "id": 1186,
@@ -309,7 +332,8 @@
     "focus_keyword": "leuvekolk vispassage",
     "reason": "De omschrijving noemt de projectnaam, locatie en de concrete rol van CI-Engineers zoals die in de paginatekst staat.",
     "warnings": [],
-    "created": "2026-09-08T09:30:03+00:00"
+    "created": "2026-09-08T09:30:03+00:00",
+    "applied_at": "2026-09-08T09:39:08+00:00"
   },
   {
     "id": 1318,
@@ -322,7 +346,8 @@
     "focus_keyword": "nieuwe afsluitdijk",
     "reason": "De omschrijving noemt de projectnaam en de concrete werkzaamheden van CI-Engineers die in de paginatekst staan.",
     "warnings": [],
-    "created": "2026-09-08T09:30:09+00:00"
+    "created": "2026-09-08T09:30:09+00:00",
+    "applied_at": "2026-09-08T09:39:10+00:00"
   },
   {
     "id": 1089,
@@ -335,7 +360,8 @@
     "focus_keyword": "onderdoorgang vierpaardjes venlo",
     "reason": "De omschrijving noemt de projectnaam en onze concrete rol (as-built tekeningen in AutoCAD voor paviljoens en inritten) zoals op de pagina beschreven.",
     "warnings": [],
-    "created": "2026-09-08T09:30:14+00:00"
+    "created": "2026-09-08T09:30:14+00:00",
+    "applied_at": "2026-09-08T09:39:11+00:00"
   },
   {
     "id": 1176,
@@ -348,7 +374,8 @@
     "focus_keyword": "ovt zuid",
     "reason": "De omschrijving benoemt concreet onze rol op OVT Zuid (metrodekken en tijdelijke constructies in Station Amsterdam Zuid) zoals beschreven in de paginatekst.",
     "warnings": [],
-    "created": "2026-09-08T09:30:23+00:00"
+    "created": "2026-09-08T09:30:23+00:00",
+    "applied_at": "2026-09-08T09:39:13+00:00"
   },
   {
     "id": 1313,
@@ -361,7 +388,8 @@
     "focus_keyword": "fundatie renovatie",
     "reason": "De omschrijving benoemt kort de opdrachtgever, het object en de rol van CI-Engineers zoals die op de projectpagina staan.",
     "warnings": [],
-    "created": "2026-09-08T09:30:27+00:00"
+    "created": "2026-09-08T09:30:27+00:00",
+    "applied_at": "2026-09-08T09:39:14+00:00"
   },
   {
     "id": 1095,
@@ -374,7 +402,8 @@
     "focus_keyword": "prinses alexiaviaduct",
     "reason": "De omschrijving noemt het project, de locatie en precies de werkzaamheden die CI-Engineers volgens de paginatekst uitvoert.",
     "warnings": [],
-    "created": "2026-09-08T09:30:37+00:00"
+    "created": "2026-09-08T09:30:37+00:00",
+    "applied_at": "2026-09-08T09:39:16+00:00"
   },
   {
     "id": 1092,
@@ -387,7 +416,8 @@
     "focus_keyword": "knooppunt de nieuwe meer",
     "reason": "De omschrijving benoemt het project, het programma Zuidasdok en onze concrete rol bij de grondkeringen, precies zoals op de pagina staat.",
     "warnings": [],
-    "created": "2026-09-08T09:30:47+00:00"
+    "created": "2026-09-08T09:30:47+00:00",
+    "applied_at": "2026-09-08T09:39:18+00:00"
   },
   {
     "id": 1098,
@@ -400,7 +430,8 @@
     "focus_keyword": "reconstructie n211 wippolderlaan",
     "reason": "De omschrijving noemt de projectnaam als zoekterm en vat onze concrete ontwerprol en de technische kenmerken uit de paginatekst samen.",
     "warnings": [],
-    "created": "2026-09-08T09:30:52+00:00"
+    "created": "2026-09-08T09:30:52+00:00",
+    "applied_at": "2026-09-08T09:39:19+00:00"
   },
   {
     "id": 1094,
@@ -413,7 +444,8 @@
     "focus_keyword": "renovatie krammersluizen",
     "reason": "De omschrijving benoemt de projectnaam, onze concrete rol (ontwerpen uitwerken in de VO-fase) en de betrokken partijen die letterlijk op de pagina staan.",
     "warnings": [],
-    "created": "2026-09-08T09:30:56+00:00"
+    "created": "2026-09-08T09:30:56+00:00",
+    "applied_at": "2026-09-08T09:39:21+00:00"
   },
   {
     "id": 1182,
@@ -426,7 +458,8 @@
     "focus_keyword": "rijnlandroute",
     "reason": "De omschrijving benoemt het project, onze concrete rol in het uitvoeringsontwerp en de locatie, precies zoals op de pagina beschreven.",
     "warnings": [],
-    "created": "2026-09-08T09:31:02+00:00"
+    "created": "2026-09-08T09:31:02+00:00",
+    "applied_at": "2026-09-08T09:39:32+00:00"
   },
   {
     "id": 1188,
@@ -439,7 +472,8 @@
     "focus_keyword": "saaone project",
     "reason": "De omschrijving benoemt het project, de A1/A6-weguitbreiding en precies de rol die CI-Engineers volgens de paginatekst had.",
     "warnings": [],
-    "created": "2026-09-08T09:31:08+00:00"
+    "created": "2026-09-08T09:31:08+00:00",
+    "applied_at": "2026-09-08T09:39:41+00:00"
   },
   {
     "id": 1184,
@@ -452,7 +486,8 @@
     "focus_keyword": "selectieve onttrekking ijmuiden",
     "reason": "De omschrijving noemt de projectnaam, onze rol sinds 2021 en de belangrijkste constructieonderdelen die letterlijk in de paginatekst staan.",
     "warnings": [],
-    "created": "2026-09-08T09:31:15+00:00"
+    "created": "2026-09-08T09:31:15+00:00",
+    "applied_at": "2026-09-08T09:39:46+00:00"
   },
   {
     "id": 1091,
@@ -465,7 +500,8 @@
     "focus_keyword": "snoekjesbrug",
     "reason": "De pagina beschrijft de historie van de Snoekjesbrug en het funderingsherstel met schroefinjectiepalen, wat in de omschrijving concreet wordt benoemd.",
     "warnings": [],
-    "created": "2026-09-08T09:31:20+00:00"
+    "created": "2026-09-08T09:31:20+00:00",
+    "applied_at": "2026-09-08T09:39:54+00:00"
   },
   {
     "id": 1189,
@@ -478,7 +514,8 @@
     "focus_keyword": "tweede coentunnel",
     "reason": "De omschrijving noemt de projectnaam, de locatie en precies de bijdrage die onze medewerkers volgens de paginatekst leverden.",
     "warnings": [],
-    "created": "2026-09-08T09:31:27+00:00"
+    "created": "2026-09-08T09:31:27+00:00",
+    "applied_at": "2026-09-08T09:39:58+00:00"
   },
   {
     "id": 1171,
@@ -491,7 +528,8 @@
     "focus_keyword": "verbreding a27",
     "reason": "De omschrijving benoemt het project, de opdracht van CI-Engineers (viaducten modelleren en schetsontwerp) en de twee-fasen aanpak, precies zoals op de pagina staat.",
     "warnings": [],
-    "created": "2026-09-08T09:31:34+00:00"
+    "created": "2026-09-08T09:31:34+00:00",
+    "applied_at": "2026-09-08T09:40:00+00:00"
   },
   {
     "id": 1173,
@@ -504,7 +542,8 @@
     "focus_keyword": "verbreding a9 badhoevedorp",
     "reason": "De omschrijving benoemt de projectnaam, de opdrachtsituatie met VeenIX en de concrete ontwerponderdelen die CI-Engineers volgens de paginatekst heeft verzorgd.",
     "warnings": [],
-    "created": "2026-09-08T09:31:43+00:00"
+    "created": "2026-09-08T09:31:43+00:00",
+    "applied_at": "2026-09-08T09:40:04+00:00"
   },
   {
     "id": 1181,
@@ -517,7 +556,8 @@
     "focus_keyword": "verlegging schijnkoker ringweg r1",
     "reason": "De omschrijving noemt de projectnaam, de locatie en precies de werkzaamheden die CI-Engineers volgens de paginatekst heeft uitgevoerd.",
     "warnings": [],
-    "created": "2026-09-08T09:31:51+00:00"
+    "created": "2026-09-08T09:31:51+00:00",
+    "applied_at": "2026-09-08T09:40:07+00:00"
   },
   {
     "id": 1312,
@@ -530,7 +570,8 @@
     "focus_keyword": "vernieuwde n31",
     "reason": "De omschrijving noemt het project, de locatie en de concrete bijdrage van CI-Engineers zoals beschreven op de pagina.",
     "warnings": [],
-    "created": "2026-09-08T09:31:55+00:00"
+    "created": "2026-09-08T09:31:55+00:00",
+    "applied_at": "2026-09-08T09:40:09+00:00"
   },
   {
     "id": 1093,
@@ -543,7 +584,8 @@
     "focus_keyword": "vervanging viaducten a44",
     "reason": "De omschrijving noemt de kern van de pagina: onze VO- en DO-werkzaamheden aan twee kunstwerken binnen het vervangingsproject op de A44.",
     "warnings": [],
-    "created": "2026-09-08T09:32:00+00:00"
+    "created": "2026-09-08T09:32:00+00:00",
+    "applied_at": "2026-09-08T09:40:11+00:00"
   },
   {
     "id": 1172,
@@ -556,7 +598,8 @@
     "focus_keyword": "wegverbreding a2",
     "reason": "De omschrijving benoemt het project en onze concrete bijdrage aan de kunstwerken, precies zoals in de paginatekst staat.",
     "warnings": [],
-    "created": "2026-09-08T09:32:04+00:00"
+    "created": "2026-09-08T09:32:04+00:00",
+    "applied_at": "2026-09-08T09:40:13+00:00"
   },
   {
     "id": 1185,
@@ -569,7 +612,8 @@
     "focus_keyword": "westrandweg",
     "reason": "De omschrijving noemt het project, de locatie en de concrete rol van CI-Engineers zoals beschreven op de pagina.",
     "warnings": [],
-    "created": "2026-09-08T09:32:09+00:00"
+    "created": "2026-09-08T09:32:09+00:00",
+    "applied_at": "2026-09-08T09:40:15+00:00"
   },
   {
     "id": 1315,
@@ -582,6 +626,7 @@
     "focus_keyword": "zuidasdok",
     "reason": "De omschrijving noemt de projectnaam als zoekterm en beschrijft feitelijk de concrete rol van CI-Engineers zoals die op de pagina staat.",
     "warnings": [],
-    "created": "2026-09-08T09:32:14+00:00"
+    "created": "2026-09-08T09:32:14+00:00",
+    "applied_at": "2026-09-08T09:40:16+00:00"
   }
 ]
