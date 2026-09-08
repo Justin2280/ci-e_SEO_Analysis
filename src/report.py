@@ -3,8 +3,11 @@ Wekelijks rapport (module 5): combineert de nieuwste runs van
 ai_visibility, seo_audit en search_console tot één markdown-rapport,
 met trend t.o.v. de vorige run. Optioneel per e-mail (--email, SMTP via .env).
 
-Vereist voor --email in .env:
-    SMTP_HOST, SMTP_PORT (587), SMTP_USER, SMTP_PASSWORD, REPORT_EMAIL_FROM, REPORT_EMAIL_TO
+Vereist voor --email in .env (één van beide):
+    Microsoft 365 / Exchange Online via Graph API (aanbevolen, app-registratie in Entra):
+        MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET, REPORT_EMAIL_FROM (mailbox), REPORT_EMAIL_TO
+    Klassiek SMTP (basic auth; op Exchange Online eind 2026 standaard uit):
+        SMTP_HOST, SMTP_PORT (587), SMTP_USER, SMTP_PASSWORD, REPORT_EMAIL_FROM, REPORT_EMAIL_TO
 
 Gebruik:
     python -m src.report              # schrijft data/reports/weekrapport-YYYY-MM-DD.md
@@ -167,7 +170,62 @@ def write_report(md: str, day: date | None = None) -> Path:
 
 
 # ---------------------------------------------------------------- e-mail
+GRAPH_TOKEN_URL = "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token"
+GRAPH_SENDMAIL_URL = "https://graph.microsoft.com/v1.0/users/{sender}/sendMail"
+
+
+def graph_message(md: str, subject: str, to: str, attachment_name: str) -> dict:
+    """Payload voor Graph sendMail: platte tekst + het rapport als .md-bijlage (pure functie)."""
+    import base64
+
+    return {
+        "message": {
+            "subject": subject,
+            "body": {"contentType": "Text", "content": md},
+            "toRecipients": [{"emailAddress": {"address": a.strip()}} for a in to.split(",") if a.strip()],
+            "attachments": [{
+                "@odata.type": "#microsoft.graph.fileAttachment",
+                "name": attachment_name,
+                "contentType": "text/markdown",
+                "contentBytes": base64.b64encode(md.encode("utf-8")).decode("ascii"),
+            }],
+        },
+        "saveToSentItems": True,
+    }
+
+
+def send_email_graph(md: str, subject: str) -> None:
+    """Verstuurt via Microsoft Graph (client credentials, Mail.Send). Werkt met Exchange Online zonder SMTP."""
+    import requests
+
+    tenant, client_id, secret = os.environ["MS_TENANT_ID"], os.environ["MS_CLIENT_ID"], os.environ["MS_CLIENT_SECRET"]
+    sender, to = os.environ["REPORT_EMAIL_FROM"], os.environ["REPORT_EMAIL_TO"]
+    r = requests.post(GRAPH_TOKEN_URL.format(tenant=tenant), timeout=30, data={
+        "client_id": client_id, "client_secret": secret,
+        "scope": "https://graph.microsoft.com/.default", "grant_type": "client_credentials"})
+    r.raise_for_status()
+    token = r.json()["access_token"]
+    payload = graph_message(md, subject, to, f"weekrapport-{date.today().isoformat()}.md")
+    r = requests.post(GRAPH_SENDMAIL_URL.format(sender=sender), json=payload, timeout=30,
+                      headers={"Authorization": f"Bearer {token}"})
+    if r.status_code != 202:
+        raise RuntimeError(f"Graph sendMail mislukt ({r.status_code}): {r.text[:300]}")
+
+
+def email_configured() -> str | None:
+    """'graph' | 'smtp' | None, afhankelijk van welke variabelen gezet zijn."""
+    if os.getenv("MS_TENANT_ID") and os.getenv("MS_CLIENT_ID") and os.getenv("MS_CLIENT_SECRET"):
+        return "graph"
+    if os.getenv("SMTP_HOST"):
+        return "smtp"
+    return None
+
+
 def send_email(md: str, subject: str) -> None:
+    """Kiest Graph (Microsoft 365) als MS_* gezet is, anders SMTP."""
+    if email_configured() == "graph":
+        send_email_graph(md, subject)
+        return
     host, port = os.environ["SMTP_HOST"], int(os.getenv("SMTP_PORT", "587"))
     user, password = os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"]
     msg = EmailMessage()
@@ -217,5 +275,9 @@ if __name__ == "__main__":
     print(md)
     print(f"Opgeslagen in {path}")
     if args.email:
+        if not email_configured():
+            print("[fout] Geen e-mailconfiguratie: zet MS_TENANT_ID/MS_CLIENT_ID/MS_CLIENT_SECRET of SMTP_* in .env",
+                  file=sys.stderr)
+            sys.exit(1)
         send_email(md, f"Weekrapport CI Search Manager {date.today().isoformat()}")
-        print(f"Gemaild naar {os.environ['REPORT_EMAIL_TO']}")
+        print(f"Gemaild via {email_configured()} naar {os.environ['REPORT_EMAIL_TO']}")

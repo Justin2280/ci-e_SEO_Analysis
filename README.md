@@ -34,7 +34,7 @@ Lukt een `.ps1` niet (execution policy)? Eenmalig: `Set-ExecutionPolicy -Scope C
 | GEMINI_API_KEY | aistudio.google.com → Get API key | Gemini-vermeldingen |
 | WP_USERNAME + WP_APP_PASSWORD | WordPress → Gebruikers → Profiel → Application Passwords | SEO-meta schrijven (lezen kan zonder) |
 | GSC_SERVICE_ACCOUNT_FILE + GSC_SITE_URL | zie hieronder | Search Console-data |
-| SMTP_* + REPORT_EMAIL_* | je mailprovider | alleen `python -m src.report --email` |
+| MS_TENANT_ID + MS_CLIENT_ID + MS_CLIENT_SECRET (of SMTP_*) + REPORT_EMAIL_* | Microsoft Entra, zie *Rapport mailen* | alleen `python -m src.report --email` |
 
 Modelnamen staan in `.env` — controleer of ze nog actueel zijn bij de providers.
 
@@ -71,7 +71,7 @@ Eenmalig instellen in GitHub → **Settings → Secrets and variables → Action
 |---|---|
 | `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` | API-keys; weglaten = provider overslaan |
 | `GSC_SERVICE_ACCOUNT_JSON` | de **volledige inhoud** van het service-account-JSON-bestand (open het in Kladblok, alles kopiëren) |
-| `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD`, `REPORT_EMAIL_FROM`, `REPORT_EMAIL_TO` | alleen als het rapport gemaild moet worden |
+| `MS_TENANT_ID`, `MS_CLIENT_ID`, `MS_CLIENT_SECRET`, `REPORT_EMAIL_FROM`, `REPORT_EMAIL_TO` | rapport mailen via Microsoft 365, zie *Rapport mailen* hieronder |
 
 Optioneel onder het tabblad **Variables**: `GSC_SITE_URL` (standaard `sc-domain:ci-engineers.com`), `OPENAI_MODEL`,
 `ANTHROPIC_MODEL`, `GEMINI_MODEL`, `SMTP_PORT`.
@@ -79,6 +79,34 @@ Optioneel onder het tabblad **Variables**: `GSC_SITE_URL` (standaard `sc-domain:
 Let op: de resultaten (AI-antwoorden, GSC-cijfers) komen in de repo te staan; houd de repo dus privé.
 De WordPress-inloggegevens zijn hier niet nodig: SEO-teksten schrijven blijft een handmatige actie met bevestiging.
 `.github/workflows/tests.yml` draait bij elke push en PR de tests en dry-runs.
+
+### Rapport mailen via Microsoft 365 / Exchange Online
+Het rapport wordt verstuurd vanuit een bestaande mailbox via de Microsoft Graph API. Daar is **geen DNS-wijziging**
+voor nodig (SPF/DKIM/DMARC staan al goed voor Exchange). Wel een eenmalige app-registratie, door een beheerder van
+jullie Microsoft 365-tenant:
+
+1. Ga naar [entra.microsoft.com](https://entra.microsoft.com) → **App-registraties → Nieuwe registratie**.
+   Naam: `CI Search Manager`, accounttype: *alleen deze organisatie*, geen redirect-URI. Registreren.
+2. Noteer op de overzichtspagina **Toepassings-id (client)** → secret `MS_CLIENT_ID` en **Map-id (tenant)** → `MS_TENANT_ID`.
+3. **Certificaten en geheimen → Nieuw clientgeheim** (bijv. 24 maanden). Kopieer direct de *Waarde* (niet de id) → `MS_CLIENT_SECRET`.
+   Zet een herinnering voor de vervaldatum; daarna een nieuw geheim aanmaken en het secret in GitHub vervangen.
+4. **API-machtigingen → Machtiging toevoegen → Microsoft Graph → Toepassingsmachtigingen → `Mail.Send`** →
+   toevoegen → **Beheerderstoestemming verlenen**.
+5. In GitHub de secrets `MS_TENANT_ID`, `MS_CLIENT_ID`, `MS_CLIENT_SECRET`, `REPORT_EMAIL_FROM` (de afzender-mailbox,
+   bijv. `info@ci-engineers.com`) en `REPORT_EMAIL_TO` (ontvangers, komma-gescheiden) invoeren.
+6. Test: **Actions → Weekly run → Run workflow** met "Rapport ook mailen" aangevinkt.
+
+Aanbevolen (beveiliging): `Mail.Send` als toepassingsmachtiging mag standaard vanuit élke mailbox versturen. Beperk dat
+tot de afzender-mailbox met een *application access policy* in Exchange Online PowerShell:
+```powershell
+Connect-ExchangeOnline
+New-ApplicationAccessPolicy -AppId "<MS_CLIENT_ID>" -PolicyScopeGroupId info@ci-engineers.com -AccessRight RestrictAccess -Description "CI Search Manager mag alleen vanuit info@ mailen"
+```
+(Werkt ook met een mail-enabled beveiligingsgroep als scope.)
+
+Alternatief zonder app-registratie: klassiek SMTP (`SMTP_HOST=smtp.office365.com`, `SMTP_USER`/`SMTP_PASSWORD` van de
+mailbox, *Geverifieerde SMTP* aan in het Microsoft 365-beheercentrum bij die gebruiker). Microsoft schakelt basic-auth
+SMTP eind december 2026 standaard uit; de Graph-route is daarom de duurzame keuze.
 
 ## Wekelijks draaien op je eigen pc (alternatief, Taakplanner)
 `run_weekly.ps1` draait alle modules na elkaar en schrijft het rapport. Eenmalig registreren (pas het pad aan):
