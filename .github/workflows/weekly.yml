@@ -4,7 +4,8 @@
 #
 # Secrets (Settings → Secrets and variables → Actions → Repository secrets):
 #   OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY   (leeg laten = provider overslaan)
-#   GSC_SERVICE_ACCOUNT_JSON                           (volledige inhoud van het service-account-JSON)
+#   GSC_SERVICE_ACCOUNT_JSON of GSC_SERVICE_ACCOUNT_FILE (volledige inhoud van het service-account-JSON)
+#   GSC_SITE_URL                                       (als secret of variable; standaard sc-domain:ci-engineers.com)
 #   E-mail (optioneel): MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET (Microsoft 365 via Graph)
 #                       of SMTP_HOST, SMTP_USER, SMTP_PASSWORD; plus REPORT_EMAIL_FROM en REPORT_EMAIL_TO
 # Variables (tabblad Variables, optioneel): GSC_SITE_URL, OPENAI_MODEL, ANTHROPIC_MODEL, GEMINI_MODEL
@@ -38,9 +39,10 @@ jobs:
       OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5-mini' }}
       ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-sonnet-4-6' }}
       GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-2.5-flash' }}
-      GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+      # Service-account-JSON: secret GSC_SERVICE_ACCOUNT_JSON of GSC_SERVICE_ACCOUNT_FILE (inhoud van het bestand)
+      GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON || secrets.GSC_SERVICE_ACCOUNT_FILE }}
       GSC_SERVICE_ACCOUNT_FILE: config/gsc-service-account.json
-      GSC_SITE_URL: ${{ vars.GSC_SITE_URL || 'sc-domain:ci-engineers.com' }}
+      GSC_SITE_URL: ${{ vars.GSC_SITE_URL || secrets.GSC_SITE_URL || 'sc-domain:ci-engineers.com' }}
       SITE_URL: https://ci-engineers.com
       MS_TENANT_ID: ${{ secrets.MS_TENANT_ID }}
       MS_CLIENT_ID: ${{ secrets.MS_CLIENT_ID }}
@@ -79,6 +81,17 @@ jobs:
         continue-on-error: true
         run: |
           printf '%s' "$GSC_SERVICE_ACCOUNT_JSON" > "$GSC_SERVICE_ACCOUNT_FILE"
+          python - <<'PY'
+          import json, os, sys
+          try:
+              d = json.load(open(os.environ["GSC_SERVICE_ACCOUNT_FILE"], encoding="utf-8"))
+              assert d.get("type") == "service_account" and d.get("client_email")
+          except Exception as e:
+              print("::error::Het secret GSC_SERVICE_ACCOUNT_JSON/GSC_SERVICE_ACCOUNT_FILE bevat geen geldig "
+                    "service-account-JSON. Plak de volledige inhoud van het .json-bestand (begint met '{').", e)
+              sys.exit(1)
+          print("Service account:", d["client_email"], "(dit adres moet gebruiker zijn in Search Console)")
+          PY
           python -m src.search_console
           rm -f "$GSC_SERVICE_ACCOUNT_FILE"
 

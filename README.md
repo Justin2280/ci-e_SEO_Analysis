@@ -70,10 +70,11 @@ Eenmalig instellen in GitHub → **Settings → Secrets and variables → Action
 | Secret | Inhoud |
 |---|---|
 | `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` | API-keys; weglaten = provider overslaan |
-| `GSC_SERVICE_ACCOUNT_JSON` | de **volledige inhoud** van het service-account-JSON-bestand (open het in Kladblok, alles kopiëren) |
+| `GSC_SERVICE_ACCOUNT_JSON` (of `GSC_SERVICE_ACCOUNT_FILE`) | de **volledige inhoud** van het service-account-JSON-bestand (open het in Kladblok, alles kopiëren) |
+| `GSC_SITE_URL` | optioneel; als secret of variable, standaard `sc-domain:ci-engineers.com` |
 | `MS_TENANT_ID`, `MS_CLIENT_ID`, `MS_CLIENT_SECRET`, `REPORT_EMAIL_FROM`, `REPORT_EMAIL_TO` | rapport mailen via Microsoft 365, zie *Rapport mailen* hieronder |
 
-Optioneel onder het tabblad **Variables**: `GSC_SITE_URL` (standaard `sc-domain:ci-engineers.com`), `OPENAI_MODEL`,
+Optioneel onder het tabblad **Variables**: `OPENAI_MODEL`,
 `ANTHROPIC_MODEL`, `GEMINI_MODEL`, `SMTP_PORT`.
 
 Let op: de resultaten (AI-antwoorden, GSC-cijfers) komen in de repo te staan; houd de repo dus privé.
