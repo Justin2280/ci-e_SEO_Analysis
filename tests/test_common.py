@@ -1,0 +1,19 @@
+import json
+from datetime import date
+
+from src.common import load_runs, results_path
+
+
+def test_results_path_naming():
+    assert results_path("ai_visibility", date(2026, 9, 8)).name == "2026-09-08.jsonl"
+    assert results_path("seo_audit", date(2026, 9, 8)).name == "seo_audit-2026-09-08.jsonl"
+
+
+def test_load_runs_newest_first(tmp_path):
+    for name, val in (("2026-09-01.jsonl", 1), ("2026-09-08.jsonl", 2), ("seo_audit-2026-09-08.jsonl", 3)):
+        (tmp_path / name).write_text(json.dumps({"v": val}) + "\n", encoding="utf-8")
+    runs = load_runs("ai_visibility", n=2, results_dir=tmp_path)
+    assert [d.isoformat() for d, _ in runs] == ["2026-09-08", "2026-09-01"]
+    assert runs[0][1] == [{"v": 2}]
+    assert load_runs("seo_audit", results_dir=tmp_path)[0][1] == [{"v": 3}]
+    assert load_runs("search_console", results_dir=tmp_path) == []
