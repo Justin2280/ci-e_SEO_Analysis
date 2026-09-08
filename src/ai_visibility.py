@@ -62,7 +62,7 @@ def ask_gemini(question: str) -> str:
 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
     r = client.models.generate_content(
-        model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+        model=os.getenv("GEMINI_MODEL", "gemini-3.6-flash"),
         contents=f"{SYSTEM_PROMPT}\n\n{question}",
     )
     return r.text or ""
@@ -100,13 +100,14 @@ def run(providers: list[str], dry_run: bool) -> list[dict]:
             continue
         for item in cfg["queries"]:
             q = item["q"]
+            error = ""
             if dry_run:
                 answer = f"(dry-run) Voorbeeldantwoord waarin Sweco en CI-Engineers genoemd worden."
             else:
                 try:
                     answer = fn(q)
                 except Exception as e:  # provider-fout mag de run niet stoppen
-                    answer = ""
+                    answer, error = "", str(e)[:200]
                     print(f"[error] {prov} / {q[:50]}…: {e}", file=sys.stderr)
             rows.append({
                 "ts": now_iso(),
@@ -117,8 +118,10 @@ def run(providers: list[str], dry_run: bool) -> list[dict]:
                 "brand_mentioned": bool(mentioned(answer, brand)),
                 "competitors_mentioned": mentioned(answer, competitors),
                 "answer": answer,
+                "error": error,
             })
-            print(f"[{prov}] {'✔' if rows[-1]['brand_mentioned'] else '✘'}  {q[:70]}")
+            mark = "!" if error else ("✔" if rows[-1]["brand_mentioned"] else "✘")
+            print(f"[{prov}] {mark}  {q[:70]}")
     return rows
 
 
@@ -130,8 +133,10 @@ def summary(rows: list[dict]) -> None:
     print("\n=== Samenvatting ===")
     for prov in sorted({r["provider"] for r in rows}):
         sub = [r for r in rows if r["provider"] == prov]
-        hits = sum(r["brand_mentioned"] for r in sub)
-        print(f"{prov:10s} CI-Engineers genoemd in {hits}/{len(sub)} antwoorden")
+        ok = [r for r in sub if not r.get("error")]
+        hits = sum(r["brand_mentioned"] for r in ok)
+        errs = f"  ({len(sub) - len(ok)} fouten)" if len(ok) < len(sub) else ""
+        print(f"{prov:10s} CI-Engineers genoemd in {hits}/{len(ok)} antwoorden{errs}")
     counts: dict[str, int] = {}
     for r in rows:
         for c in r["competitors_mentioned"]:

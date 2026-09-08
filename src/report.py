@@ -61,15 +61,23 @@ def ai_section(cur: Run, prev: Run) -> list[str]:
         return out + ["Geen data. Draai `python -m src.ai_visibility`.", ""]
     out.append(f"Run van {day}. Wordt CI-Engineers genoemd in de antwoorden?")
     out += ["", "| Provider | Genoemd | Vorige run |", "|---|---|---|"]
+    ok_rows = [r for r in rows if not r.get("error")]
+    errors = len(rows) - len(ok_rows)
     for prov in sorted({r["provider"] for r in rows}):
-        sub = [r for r in rows if r["provider"] == prov]
-        psub = [r for r in prev_rows if r["provider"] == prov]
+        sub = [r for r in ok_rows if r["provider"] == prov]
+        n_err = sum(1 for r in rows if r["provider"] == prov and r.get("error"))
+        psub = [r for r in prev_rows if r["provider"] == prov and not r.get("error")]
         hits = sum(1 for r in sub if r["brand_mentioned"])
         cur_pct = pct(hits, len(sub))
         prev_pct = pct(sum(1 for r in psub if r["brand_mentioned"]), len(psub)) if psub else None
-        out.append(f"| {prov} | {hits}/{len(sub)} ({cur_pct}%) | {delta(cur_pct, prev_pct) or '-'} |")
+        shown = f"{hits}/{len(sub)} ({cur_pct}%)" if sub else "geen antwoorden"
+        note = f" ⚠ {n_err} fouten" if n_err else ""
+        out.append(f"| {prov} | {shown}{note} | {delta(cur_pct, prev_pct) or '-'} |")
+    if errors:
+        first = next(r["error"] for r in rows if r.get("error"))
+        out.append(f"\n⚠ {errors} vragen gaven een fout (niet meegeteld). Eerste fout: {first[:120]}")
     for tag in sorted({r["tag"] for r in rows}):
-        sub = [r for r in rows if r["tag"] == tag]
+        sub = [r for r in ok_rows if r["tag"] == tag]
         out.append(f"\n- Doelgroep *{tag}*: genoemd in {sum(1 for r in sub if r['brand_mentioned'])}/{len(sub)}")
     counts: dict[str, int] = {}
     for r in rows:
@@ -198,18 +206,46 @@ def send_email_graph(md: str, subject: str) -> None:
     """Verstuurt via Microsoft Graph (client credentials, Mail.Send). Werkt met Exchange Online zonder SMTP."""
     import requests
 
-    tenant, client_id, secret = os.environ["MS_TENANT_ID"], os.environ["MS_CLIENT_ID"], os.environ["MS_CLIENT_SECRET"]
-    sender, to = os.environ["REPORT_EMAIL_FROM"], os.environ["REPORT_EMAIL_TO"]
-    r = requests.post(GRAPH_TOKEN_URL.format(tenant=tenant), timeout=30, data={
-        "client_id": client_id, "client_secret": secret,
+    env = {k: os.environ[k].strip() for k in ("MS_TENANT_ID", "MS_CLIENT_ID", "MS_CLIENT_SECRET",
+                                              "REPORT_EMAIL_FROM", "REPORT_EMAIL_TO")}
+    sender, to = env["REPORT_EMAIL_FROM"], env["REPORT_EMAIL_TO"]
+    r = requests.post(GRAPH_TOKEN_URL.format(tenant=env["MS_TENANT_ID"]), timeout=30, data={
+        "client_id": env["MS_CLIENT_ID"], "client_secret": env["MS_CLIENT_SECRET"],
         "scope": "https://graph.microsoft.com/.default", "grant_type": "client_credentials"})
-    r.raise_for_status()
+    if not r.ok:
+        raise RuntimeError(f"Graph token mislukt ({r.status_code}): {graph_error_text(r)}")
     token = r.json()["access_token"]
     payload = graph_message(md, subject, to, f"weekrapport-{date.today().isoformat()}.md")
     r = requests.post(GRAPH_SENDMAIL_URL.format(sender=sender), json=payload, timeout=30,
                       headers={"Authorization": f"Bearer {token}"})
     if r.status_code != 202:
-        raise RuntimeError(f"Graph sendMail mislukt ({r.status_code}): {r.text[:300]}")
+        raise RuntimeError(f"Graph sendMail mislukt ({r.status_code}): {graph_error_text(r)}")
+
+
+def graph_error_text(r) -> str:
+    """Leesbare foutmelding uit een Microsoft-antwoord (AADSTS-code + omschrijving, geen secrets)."""
+    try:
+        j = r.json()
+        err = j.get("error")
+        if isinstance(err, dict):  # Graph: {"error": {"code": ..., "message": ...}}
+            return f"{err.get('code')}: {err.get('message')}"
+        return f"{err}: {j.get('error_description', '')}"[:400]  # login.microsoftonline.com
+    except ValueError:
+        return r.text[:300]
+
+
+GRAPH_HINTS = {
+    "AADSTS90002": "MS_TENANT_ID klopt niet (tenant niet gevonden). Controleer 'Map-id (tenant)' in Entra.",
+    "AADSTS700016": "MS_CLIENT_ID hoort niet bij deze tenant. Controleer 'Toepassings-id (client)' in Entra.",
+    "AADSTS7000215": "MS_CLIENT_SECRET is onjuist: waarschijnlijk de secret-ID i.p.v. de Waarde geplakt.",
+    "AADSTS7000222": "Het clientgeheim is verlopen; maak een nieuw geheim aan in Entra.",
+    "ErrorAccessDenied": "Mail.Send heeft geen beheerderstoestemming, of een access policy blokkeert deze mailbox.",
+    "ResourceNotFound": "REPORT_EMAIL_FROM is geen bestaande mailbox in deze tenant.",
+}
+
+
+def graph_hint(message: str) -> str:
+    return next((hint for code, hint in GRAPH_HINTS.items() if code in message), "")
 
 
 def email_configured() -> str | None:
@@ -262,7 +298,9 @@ if __name__ == "__main__":
     utf8_console()
     ap = argparse.ArgumentParser(description="Wekelijks rapport uit data/results/")
     ap.add_argument("--dry-run", action="store_true", help="voorbeelddata, alleen naar stdout")
-    ap.add_argument("--email", action="store_true", help="rapport ook mailen (SMTP_* in .env)")
+    ap.add_argument("--email", action="store_true", help="rapport ook mailen (MS_* of SMTP_* in .env)")
+    ap.add_argument("--email-only", action="store_true",
+                    help="alleen het rapport van vandaag uit data/reports/ mailen, niets opnieuw bouwen")
     args = ap.parse_args()
 
     if args.dry_run:
@@ -270,14 +308,27 @@ if __name__ == "__main__":
         print(md)
         sys.exit(0)
 
-    md = build_report(load_runs("ai_visibility"), load_runs("seo_audit"), load_runs("search_console"))
-    path = write_report(md)
-    print(md)
-    print(f"Opgeslagen in {path}")
-    if args.email:
+    if args.email_only:
+        path = REPORTS / f"weekrapport-{date.today().isoformat()}.md"
+        if not path.exists():
+            print(f"[fout] {path} bestaat niet; draai eerst python -m src.report", file=sys.stderr)
+            sys.exit(1)
+        md = path.read_text(encoding="utf-8")
+    else:
+        md = build_report(load_runs("ai_visibility"), load_runs("seo_audit"), load_runs("search_console"))
+        path = write_report(md)
+        print(md)
+        print(f"Opgeslagen in {path}")
+
+    if args.email or args.email_only:
         if not email_configured():
             print("[fout] Geen e-mailconfiguratie: zet MS_TENANT_ID/MS_CLIENT_ID/MS_CLIENT_SECRET of SMTP_* in .env",
                   file=sys.stderr)
             sys.exit(1)
-        send_email(md, f"Weekrapport CI Search Manager {date.today().isoformat()}")
+        try:
+            send_email(md, f"Weekrapport CI Search Manager {date.today().isoformat()}")
+        except Exception as e:
+            hint = graph_hint(str(e))
+            print(f"[fout] Mailen mislukt: {e}" + (f"\n       → {hint}" if hint else ""), file=sys.stderr)
+            sys.exit(1)
         print(f"Gemaild via {email_configured()} naar {os.environ['REPORT_EMAIL_TO']}")

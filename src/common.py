@@ -103,7 +103,9 @@ def missing_keys(env: dict[str, str]) -> dict[str, list[str]]:
             smtp_ok = all((env.get(k) or "").strip() for k in ENV_KEYS["report --email (SMTP, alternatief)"])
             if graph_ok or smtp_ok:
                 missing = []  # één van de twee routes is genoeg
-        if module == "search_console" and "GSC_SERVICE_ACCOUNT_FILE" not in missing:
+        if module == "search_console" and (env.get("GSC_SERVICE_ACCOUNT_JSON") or "").strip():
+            missing = [k for k in missing if k != "GSC_SERVICE_ACCOUNT_FILE"]  # inhoud via env (GitHub Actions)
+        elif module == "search_console" and "GSC_SERVICE_ACCOUNT_FILE" not in missing:
             path = Path(env["GSC_SERVICE_ACCOUNT_FILE"])
             if not (path if path.is_absolute() else ROOT / path).exists():
                 missing.append("GSC_SERVICE_ACCOUNT_FILE (bestand niet gevonden)")

@@ -38,7 +38,7 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5-mini' }}
       ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-sonnet-4-6' }}
-      GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-2.5-flash' }}
+      GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-3.6-flash' }}
       # Service-account-JSON: secret GSC_SERVICE_ACCOUNT_JSON of GSC_SERVICE_ACCOUNT_FILE (inhoud van het bestand)
       GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON || secrets.GSC_SERVICE_ACCOUNT_FILE }}
       GSC_SERVICE_ACCOUNT_FILE: config/gsc-service-account.json
@@ -55,9 +55,9 @@ jobs:
       REPORT_EMAIL_TO: ${{ secrets.REPORT_EMAIL_TO }}
       PYTHONIOENCODING: utf-8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           cache: pip
@@ -96,12 +96,13 @@ jobs:
           rm -f "$GSC_SERVICE_ACCOUNT_FILE"
 
       - name: Module 5 — Weekrapport
-        run: |
-          if [ "${{ inputs.email }}" != "false" ] && { [ -n "$MS_TENANT_ID" ] || [ -n "$SMTP_HOST" ]; }; then
-            python -m src.report --email
-          else
-            python -m src.report
-          fi
+        run: python -m src.report
+
+      - name: Rapport mailen
+        # Mailen mag het bewaren van resultaten nooit blokkeren: aparte stap, fout is niet fataal.
+        if: inputs.email != false && (env.MS_TENANT_ID != '' || env.SMTP_HOST != '')
+        continue-on-error: true
+        run: python -m src.report --email-only
 
       - name: Resultaten terug in de repo zetten
         run: |
@@ -116,6 +117,7 @@ jobs:
           fi
 
       - name: Rapport als artifact bewaren
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: weekrapport

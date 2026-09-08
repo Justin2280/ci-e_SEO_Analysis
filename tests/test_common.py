@@ -39,3 +39,11 @@ def test_missing_keys_email_either_route():
                           "REPORT_EMAIL_FROM": "a@x.nl", "REPORT_EMAIL_TO": "b@x.nl"})
     assert graph["report --email (Microsoft 365 / Graph)"] == [] and graph["report --email (SMTP, alternatief)"] == []
     assert "MS_TENANT_ID" in missing_keys({})["report --email (Microsoft 365 / Graph)"]
+
+
+def test_missing_keys_gsc_json_via_env():
+    from src.common import missing_keys
+
+    r = missing_keys({"GSC_SERVICE_ACCOUNT_JSON": "{...}", "GSC_SERVICE_ACCOUNT_FILE": "config/x.json",
+                      "GSC_SITE_URL": "sc-domain:x"})
+    assert r["search_console"] == []
