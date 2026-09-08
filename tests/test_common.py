@@ -47,3 +47,15 @@ def test_missing_keys_gsc_json_via_env():
     r = missing_keys({"GSC_SERVICE_ACCOUNT_JSON": "{...}", "GSC_SERVICE_ACCOUNT_FILE": "config/x.json",
                       "GSC_SITE_URL": "sc-domain:x"})
     assert r["search_console"] == []
+
+
+def test_save_jsonl_overwrites_same_day(tmp_path, monkeypatch):
+    import json
+
+    import src.common as common
+
+    monkeypatch.setattr(common, "RESULTS", tmp_path)
+    common.save_jsonl([{"v": 1}, {"v": 2}], "seo_audit")
+    path = common.save_jsonl([{"v": 3}], "seo_audit")
+    rows = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines()]
+    assert rows == [{"v": 3}]

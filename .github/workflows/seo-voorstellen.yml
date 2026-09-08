@@ -1,0 +1,100 @@
+# SEO-voorstellen: Claude schrijft per pagina zonder korte omschrijving een voorstel (stap 1),
+# jij beoordeelt het .md-bestand in de repo (stap 2), en pas na bevestiging "JA" worden ze in Yoast gezet (stap 3).
+# Handmatig starten: Actions → "SEO-voorstellen" → Run workflow.
+#
+# Secrets: ANTHROPIC_API_KEY (voorstellen), WP_USERNAME + WP_APP_PASSWORD (toepassen).
+# Variable (optioneel): SUGGEST_MODEL (standaard claude-opus-5).
+
+name: SEO-voorstellen
+
+on:
+  workflow_dispatch:
+    inputs:
+      actie:
+        description: "Wat wil je doen?"
+        type: choice
+        options: ["voorstellen maken", "toepassen in Yoast"]
+        default: "voorstellen maken"
+      ids:
+        description: "Alleen deze WordPress-id's (komma-gescheiden). Leeg = alle pagina's zonder omschrijving."
+        type: string
+        default: ""
+      limit:
+        description: "Maximaal aantal pagina's bij 'voorstellen maken' (leeg = alles)"
+        type: string
+        default: ""
+      bestand:
+        description: "Bij 'toepassen': pad van het .json-bestand (leeg = nieuwste in data/suggestions/)"
+        type: string
+        default: ""
+      bevestig:
+        description: "Bij 'toepassen': typ JA om de teksten écht op de live site te zetten"
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-voorstellen
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      SUGGEST_MODEL: ${{ vars.SUGGEST_MODEL || 'claude-opus-5' }}
+      WP_BASE_URL: https://ci-engineers.com
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Voorstellen maken
+        if: inputs.actie == 'voorstellen maken'
+        run: |
+          args=""
+          [ -n "${{ inputs.ids }}" ] && args="$args --ids '${{ inputs.ids }}'"
+          [ -n "${{ inputs.limit }}" ] && args="$args --limit ${{ inputs.limit }}"
+          eval python -m src.seo_suggest $args
+
+      - name: Bevestiging controleren
+        if: inputs.actie == 'toepassen in Yoast'
+        run: |
+          if [ "${{ inputs.bevestig }}" != "JA" ]; then
+            echo "::error::Niet toegepast: typ JA in het veld 'bevestig' om de teksten op de live site te zetten."
+            exit 1
+          fi
+
+      - name: Toepassen in Yoast (na bevestiging JA)
+        if: inputs.actie == 'toepassen in Yoast'
+        env:
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+        run: |
+          args="--yes"
+          [ -n "${{ inputs.ids }}" ] && args="$args --ids '${{ inputs.ids }}'"
+          if [ -n "${{ inputs.bestand }}" ]; then
+            eval python -m src.seo_suggest --apply "${{ inputs.bestand }}" $args
+          else
+            eval python -m src.seo_suggest --apply $args
+          fi
+
+      - name: Voorstellen in de repo zetten
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/suggestions
+          if git diff --cached --quiet; then
+            echo "Geen wijzigingen"
+          else
+            git commit -m "SEO-voorstellen: ${{ inputs.actie }} $(date -u +%Y-%m-%d)"
+            git push
+          fi

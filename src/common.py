@@ -4,6 +4,7 @@ Gedeelde helpers voor alle modules: paden, JSONL-opslag, run-historie en console
 Bestandsnaamgeving in data/results/:
     <module>-YYYY-MM-DD.jsonl      (seo_audit, search_console)
     YYYY-MM-DD.jsonl               (ai_visibility, oud formaat — blijft ondersteund)
+Eén bestand = één run; een herhaalde run op dezelfde dag vervangt het bestand.
 """
 from __future__ import annotations
 
@@ -46,9 +47,11 @@ def results_path(prefix: str, day: date | None = None) -> Path:
 
 
 def save_jsonl(rows: list[dict], prefix: str) -> Path:
+    """Schrijft de rijen van één run naar het dagbestand. Een tweede run op dezelfde dag
+    overschrijft de eerste (anders telt het weekrapport alles dubbel)."""
     RESULTS.mkdir(parents=True, exist_ok=True)
     out = results_path(prefix)
-    with out.open("a", encoding="utf-8") as f:
+    with out.open("w", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     return out
@@ -120,7 +123,12 @@ def check_env() -> bool:
     env_file = ROOT / ".env"
     print(f".env: {'gevonden' if env_file.exists() else 'ONTBREEKT (kopieer .env.example naar .env)'}")
     report = missing_keys(dict(os.environ))
+    in_actions = bool(os.getenv("GITHUB_ACTIONS"))
     for module, missing in report.items():
+        if in_actions and module.startswith("wp_client"):
+            print(f"– {module:38s} niet nodig in GitHub Actions (alleen lokaal, schrijven gebeurt handmatig)")
+            report[module] = []
+            continue
         mark = "✔" if not missing else "✘"
         print(f"{mark} {module:38s} {'klaar' if not missing else 'ontbreekt: ' + ', '.join(missing)}")
     print("Modules seo_audit en wp_client (lezen) hebben geen keys nodig.")

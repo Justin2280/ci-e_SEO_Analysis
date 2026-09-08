@@ -18,11 +18,16 @@ Justin werkt op **Windows** (PowerShell): instructies daarop richten; code blijf
 3. `src/search_console.py` — DONE. GSC API via service account, laatste 28 dagen (lag 3), dimensies query/page/page+query.
 4. `src/wp_client.py` — DONE. Paginering, Yoast/Rank Math-detectie, `seo_meta()`, preview-diff + bevestiging voor schrijven.
    Schrijven vereist `wp/mu-plugins/ci-seo-meta.php` op de server (register_post_meta show_in_rest).
-5. `src/report.py` — DONE. Weekrapport uit de nieuwste twee runs per module, trend ▲/▼, optioneel e-mail (smtplib).
+5. `src/report.py` — DONE. Weekrapport voor de directie (Eric, geen techniek): "In het kort", "Wat gaan we doen"
+   (acties afgeleid uit de data), cijfers, uitleg van termen. Markdown + HTML; mail via Microsoft Graph of SMTP.
+6. `src/seo_suggest.py` — DONE. Claude (claude-opus-5, structured output) schrijft per pagina zonder meta description
+   een voorstel op basis van de paginatekst → data/suggestions/*.json + .md. Toepassen in Yoast alleen na JA
+   (CLI) of input `bevestig: JA` in .github/workflows/seo-voorstellen.yml.
 
 Gedeeld: `src/common.py` (ROOT/RESULTS/REPORTS, `save_jsonl`, `load_runs`, `utf8_console`).
 JSONL-naamgeving: `data/results/<module>-YYYY-MM-DD.jsonl`; ai_visibility gebruikt het oude `YYYY-MM-DD.jsonl`.
-Elke rij heeft `ts` en `module`. Meerdere runs op één dag worden aan hetzelfde bestand toegevoegd (append).
+Elke rij heeft `ts` en `module`. Eén bestand = één run: een herhaalde run op dezelfde dag **overschrijft** het
+dagbestand (append gaf dubbeltellingen in het weekrapport). Het rapport vergelijkt met de vorige dag met data.
 
 ## Regels
 - Nooit content op de live site wijzigen zonder expliciete bevestiging; eerst een diff/preview tonen
@@ -37,5 +42,6 @@ Elke rij heeft `ts` en `module`. Meerdere runs op één dag worden aan hetzelfde
 
 ## Ideeën voor later
 - Trendgrafieken uit de JSONL (matplotlib) in het weekrapport.
+- seo_suggest ook SEO-titels laten voorstellen (nu alleen description + focus-zoekwoord).
 - JobPosting-schema controleren op de werken-bij-pagina's (nu alleen Organization/LocalBusiness).
 - Vragen in config/queries.yaml periodiek aanvullen met echte GSC-zoekwoorden.

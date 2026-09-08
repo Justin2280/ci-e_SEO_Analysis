@@ -10,7 +10,8 @@ en wat er technisch aan de site te verbeteren valt.
 | 2 SEO-audit | `python -m src.seo_audit` | Crawlt de sitemap, checkt per pagina title, description, H1, schema, links, alt-teksten, laadtijd | geen |
 | 3 Search Console | `python -m src.search_console` | Zoekwoorden, posities, klikken en CTR van de laatste 28 dagen | GSC service account |
 | 4 WordPress SEO-meta | `python -m src.wp_client --list` | SEO-title/description per pagina lezen; schrijven met preview + bevestiging | WP app password |
-| 5 Weekrapport | `python -m src.report` | Combineert 1–3 tot één markdown-rapport met trends; optioneel mailen | SMTP (alleen voor --email) |
+| 5 Weekrapport | `python -m src.report` | Rapport voor de directie: samenvatting, actielijst, cijfers met trend; als HTML-mail | Microsoft 365 (alleen voor --email) |
+| 6 SEO-voorstellen | `python -m src.seo_suggest` | Claude schrijft per pagina zonder omschrijving een voorstel; na **JA** in Yoast gezet | ANTHROPIC + WP app password (toepassen) |
 
 Elke module heeft `--dry-run` (geen API-calls) en schrijft JSONL naar `data/results/` zodat trends over tijd te volgen zijn.
 
@@ -64,7 +65,8 @@ vult het veld dat nu op veel pagina's leeg is.
 ## Draaien via GitHub Actions (aanbevolen, niets lokaal nodig)
 `.github/workflows/weekly.yml` draait elke maandagochtend alle modules en commit de resultaten (`data/results/`,
 `data/reports/`) terug in de repo. Het weekrapport staat dan in `data/reports/weekrapport-YYYY-MM-DD.md` en als
-artifact bij de run. Handmatig starten: **Actions → Weekly run → Run workflow**.
+artifact bij de run. Handmatig starten: **Actions → Weekly run → Run workflow**. Een herhaalde run op dezelfde dag
+vervangt de resultaten van die dag (dus geen dubbele cijfers in het rapport).
 
 Eenmalig instellen in GitHub → **Settings → Secrets and variables → Actions → Repository secrets**:
 
@@ -81,6 +83,22 @@ Optioneel onder het tabblad **Variables**: `OPENAI_MODEL`,
 Let op: de resultaten (AI-antwoorden, GSC-cijfers) komen in de repo te staan; houd de repo dus privé.
 De WordPress-inloggegevens zijn hier niet nodig: SEO-teksten schrijven blijft een handmatige actie met bevestiging.
 `.github/workflows/tests.yml` draait bij elke push en PR de tests en dry-runs.
+
+### Actie ondernemen: SEO-voorstellen laten schrijven en toepassen (module 6)
+Het weekrapport noemt onder *Wat gaan we doen* welke pagina's een korte omschrijving missen. Die teksten hoef je niet
+zelf te schrijven:
+
+1. **Actions → SEO-voorstellen → Run workflow**, actie *voorstellen maken* (eventueel `limit` 5 om te proeven).
+   Claude leest elke pagina zonder omschrijving en schrijft een voorstel van 110–155 tekens plus focus-zoekwoord.
+   Resultaat: `data/suggestions/seo-voorstellen-<datum>.md` (om te lezen) en `.json` (de bron), automatisch gecommit.
+2. **Beoordelen**: open het `.md`-bestand in GitHub. Een tekst aanpassen? Bewerk in GitHub het `.json`-bestand
+   (potloodje → veld `proposed_description` → Commit changes).
+3. **Toepassen**: Run workflow, actie *toepassen in Yoast*, veld `bevestig` = **JA**. Optioneel `ids` om alleen bepaalde
+   pagina's te doen. Zonder JA gebeurt er niets. Toegepaste voorstellen krijgen `applied_at` en worden niet nog eens gezet.
+
+Hetzelfde lokaal: `python -m src.seo_suggest` → beoordelen → `python -m src.seo_suggest --apply` (vraagt om JA).
+Nodig: `ANTHROPIC_API_KEY`; voor toepassen `WP_USERNAME`/`WP_APP_PASSWORD` en de mu-plugin (staat al op de server).
+Kosten: ongeveer één Claude-call per pagina; 45 pagina's is minder dan een euro.
 
 ### Rapport mailen via Microsoft 365 / Exchange Online
 Het rapport wordt verstuurd vanuit een bestaande mailbox via de Microsoft Graph API. Daar is **geen DNS-wijziging**
@@ -131,12 +149,14 @@ src/ai_visibility.py    module 1  AI-zichtbaarheidscheck
 src/seo_audit.py        module 2  SEO-audit via sitemap
 src/search_console.py   module 3  Google Search Console
 src/wp_client.py        module 4  WordPress REST + SEO-metavelden
-src/report.py           module 5  weekrapport (+ e-mail)
+src/report.py           module 5  weekrapport voor de directie (+ HTML-mail)
+src/seo_suggest.py      module 6  SEO-voorstellen door Claude, toepassen na JA
 wp/mu-plugins/          PHP-snippet om Yoast/Rank Math-velden via REST schrijfbaar te maken
 tests/                  pytest (zonder netwerk), fixtures voor --dry-run
 data/results/           JSONL per run (door de workflow gecommit)
 data/reports/           markdown-rapporten (door de workflow gecommit)
-.github/workflows/      weekly.yml (wekelijkse run) en tests.yml (pytest + dry-runs)
+.github/workflows/      weekly.yml (wekelijkse run), seo-voorstellen.yml (module 6), tests.yml (pytest + dry-runs)
+data/suggestions/       SEO-voorstellen (door de workflow gecommit)
 setup.ps1               eenmalige installatie (venv, .env, tests)
 run_weekly.ps1          alles achter elkaar draaien (Taakplanner)
 ```
