@@ -24,3 +24,4 @@ jobs:
           python -m src.seo_audit --dry-run
           python -m src.search_console --dry-run
           python -m src.report --dry-run
+          python -m src.seo_suggest --dry-run

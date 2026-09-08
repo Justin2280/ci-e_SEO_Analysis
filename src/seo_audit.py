@@ -216,6 +216,15 @@ def _same_host(a: str, b: str) -> bool:
     return ha == hb
 
 
+def extract_text(html: str, max_chars: int = 4000) -> str:
+    """Zichtbare tekst van een pagina (zonder head/script/svg), ingekort. Voor tekstvoorstellen (seo_suggest)."""
+    p = PageParser()
+    p.feed(html)
+    p.close()
+    text = " ".join("".join(p.text_parts).split())
+    return text[:max_chars]
+
+
 def parse_page(html: str, base_url: str) -> dict:
     p = PageParser()
     p.feed(html)
