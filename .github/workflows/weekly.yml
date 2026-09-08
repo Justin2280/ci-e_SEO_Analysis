@@ -1,0 +1,106 @@
+# Wekelijkse run van CI Search Manager op GitHub Actions.
+# Draait alle modules, schrijft het weekrapport en commit de resultaten (data/results, data/reports) terug in de repo.
+# Handmatig starten: Actions → "Weekly run" → Run workflow.
+#
+# Secrets (Settings → Secrets and variables → Actions → Repository secrets):
+#   OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY   (leeg laten = provider overslaan)
+#   GSC_SERVICE_ACCOUNT_JSON                           (volledige inhoud van het service-account-JSON)
+#   SMTP_HOST, SMTP_USER, SMTP_PASSWORD, REPORT_EMAIL_TO, REPORT_EMAIL_FROM  (optioneel, voor e-mail)
+# Variables (tabblad Variables, optioneel): GSC_SITE_URL, OPENAI_MODEL, ANTHROPIC_MODEL, GEMINI_MODEL
+
+name: Weekly run
+
+on:
+  schedule:
+    - cron: "0 5 * * 1"        # maandag 05:00 UTC = 07:00 NL (zomertijd) / 06:00 (wintertijd)
+  workflow_dispatch:
+    inputs:
+      email:
+        description: "Rapport ook mailen (vereist SMTP-secrets)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-run
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5-mini' }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-sonnet-4-6' }}
+      GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-2.5-flash' }}
+      GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+      GSC_SERVICE_ACCOUNT_FILE: config/gsc-service-account.json
+      GSC_SITE_URL: ${{ vars.GSC_SITE_URL || 'sc-domain:ci-engineers.com' }}
+      SITE_URL: https://ci-engineers.com
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ vars.SMTP_PORT || '587' }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      REPORT_EMAIL_FROM: ${{ secrets.REPORT_EMAIL_FROM }}
+      REPORT_EMAIL_TO: ${{ secrets.REPORT_EMAIL_TO }}
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Controleer welke keys gezet zijn
+        run: python -m src.common --check-env || true
+
+      - name: Module 1 — AI-zichtbaarheid
+        if: env.OPENAI_API_KEY != '' || env.ANTHROPIC_API_KEY != '' || env.GEMINI_API_KEY != ''
+        continue-on-error: true
+        run: python -m src.ai_visibility
+
+      - name: Module 2 — SEO-audit
+        continue-on-error: true
+        run: python -m src.seo_audit
+
+      - name: Module 3 — Search Console
+        if: env.GSC_SERVICE_ACCOUNT_JSON != ''
+        continue-on-error: true
+        run: |
+          printf '%s' "$GSC_SERVICE_ACCOUNT_JSON" > "$GSC_SERVICE_ACCOUNT_FILE"
+          python -m src.search_console
+          rm -f "$GSC_SERVICE_ACCOUNT_FILE"
+
+      - name: Module 5 — Weekrapport
+        run: |
+          if [ "${{ inputs.email }}" != "false" ] && [ -n "$SMTP_HOST" ]; then
+            python -m src.report --email
+          else
+            python -m src.report
+          fi
+
+      - name: Resultaten terug in de repo zetten
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/results data/reports
+          if git diff --cached --quiet; then
+            echo "Geen nieuwe resultaten"
+          else
+            git commit -m "Wekelijkse run $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Rapport als artifact bewaren
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekrapport
+          path: data/reports/
+          if-no-files-found: ignore
