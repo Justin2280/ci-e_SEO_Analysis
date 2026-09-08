@@ -17,3 +17,16 @@ def test_load_runs_newest_first(tmp_path):
     assert runs[0][1] == [{"v": 2}]
     assert load_runs("seo_audit", results_dir=tmp_path)[0][1] == [{"v": 3}]
     assert load_runs("search_console", results_dir=tmp_path) == []
+
+
+def test_missing_keys():
+    from src.common import missing_keys
+
+    empty = missing_keys({})
+    assert empty["wp_client (schrijven)"] == ["WP_USERNAME", "WP_APP_PASSWORD"]
+    assert "GSC_SITE_URL" in empty["search_console"]
+    assert empty["ai_visibility (minimaal één provider)"] == ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY"]
+    one_provider = missing_keys({"GEMINI_API_KEY": "x"})
+    assert one_provider["ai_visibility (minimaal één provider)"] == []
+    gsc = missing_keys({"GSC_SERVICE_ACCOUNT_FILE": "config/bestaat-niet.json", "GSC_SITE_URL": "sc-domain:x"})
+    assert gsc["search_console"] == ["GSC_SERVICE_ACCOUNT_FILE (bestand niet gevonden)"]

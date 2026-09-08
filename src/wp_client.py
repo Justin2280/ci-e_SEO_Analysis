@@ -116,14 +116,16 @@ class WPClient:
             return "rankmath"
         return "none"
 
-    def meta_writable(self) -> bool:
-        """True als de SEO-metavelden via REST zichtbaar zijn (mu-plugin geïnstalleerd)."""
-        if not self.auth:
-            return False
-        sample = self._get("pages", per_page=1, context="edit")
+    def meta_exposed(self) -> bool:
+        """True als de SEO-metavelden via REST zichtbaar zijn (mu-plugin geïnstalleerd). Werkt zonder auth."""
+        sample = self._get("pages", per_page=1, _fields="id,meta")
         meta = (sample[0].get("meta") or {}) if sample else {}
         keys = set(YOAST_META.values()) | set(RANKMATH_META.values())
         return bool(keys & set(meta))
+
+    def meta_writable(self) -> bool:
+        """True als schrijven kan: velden zichtbaar én inloggegevens aanwezig."""
+        return bool(self.auth) and self.meta_exposed()
 
     def all_seo_meta(self) -> list[dict]:
         return [seo_meta(p, "pages") for p in self.pages()] + [seo_meta(p, "posts") for p in self.posts()]
@@ -210,10 +212,10 @@ if __name__ == "__main__":
     if args.detect:
         plugin = wp.detect_seo_plugin()
         print(f"SEO-plugin: {plugin}")
-        if wp.auth:
-            print("Metavelden schrijfbaar via REST:", "ja" if wp.meta_writable() else "nee (mu-plugin nog niet geïnstalleerd)")
-        else:
-            print("Geen WP_USERNAME/WP_APP_PASSWORD gezet: alleen lezen")
+        exposed = wp.meta_exposed()
+        print("Metavelden zichtbaar via REST:", "ja" if exposed else "nee (wp/mu-plugins/ci-seo-meta.php nog niet op de server)")
+        print("Schrijven mogelijk:", "ja" if (exposed and wp.auth) else
+              "nee (zet WP_USERNAME en WP_APP_PASSWORD in .env)" if exposed else "nee")
     if args.list:
         print_table(wp.all_seo_meta())
     if args.set:

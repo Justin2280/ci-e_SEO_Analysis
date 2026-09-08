@@ -16,17 +16,15 @@ Elke module heeft `--dry-run` (geen API-calls) en schrijft JSONL naar `data/resu
 
 ## Setup (Windows, PowerShell)
 ```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements-dev.txt
-Copy-Item .env.example .env        # vul daarna de keys in
-python -m pytest                   # 19 tests, geen netwerk
-python -m src.ai_visibility --dry-run
-python -m src.seo_audit --dry-run
-python -m src.search_console --dry-run
-python -m src.report --dry-run
+.\setup.ps1          # maakt .venv, installeert alles, maakt .env aan, draait de tests en checkt de .env
 ```
-Lukt `Activate.ps1` niet (execution policy)? Eenmalig: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+Daarna alleen nog de keys in `.env` invullen. Controleren wat er nog ontbreekt:
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m src.common --check-env
+python -m src.seo_audit --dry-run      # elke module heeft --dry-run zonder API-calls
+```
+Lukt een `.ps1` niet (execution policy)? Eenmalig: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ## Benodigde keys / toegang
 | Wat | Waar | Nodig voor |
@@ -51,11 +49,16 @@ Modelnamen staan in `.env` — controleer of ze nog actueel zijn bij de provider
 ### WordPress SEO-meta schrijven (module 4)
 De site draait **Yoast SEO**. Lezen werkt direct (Yoast zet `yoast_head_json` in de REST API).
 Schrijven kan pas als WordPress de metavelden via REST accepteert:
-1. Upload `wp/mu-plugins/ci-seo-meta.php` via hPanel → Bestandsbeheer naar `public_html/wp-content/mu-plugins/`
-   (map aanmaken als die ontbreekt; mu-plugins zijn direct actief).
-2. `python -m src.wp_client --detect` moet dan melden: *Metavelden schrijfbaar via REST: ja*.
+1. ✔ Gedaan: `wp/mu-plugins/ci-seo-meta.php` staat op de server in `public_html/wp-content/mu-plugins/`
+   (bij een nieuwe site: uploaden via hPanel → Bestandsbeheer; mu-plugins zijn direct actief).
+   `python -m src.wp_client --detect` meldt nu *Metavelden zichtbaar via REST: ja*.
+2. Zet `WP_USERNAME` en `WP_APP_PASSWORD` in `.env` (WordPress → Gebruikers → Profiel → Application Passwords).
 3. Wijzigen: `python -m src.wp_client --set 1388 --description "Nieuwe tekst"` toont eerst een diff en schrijft pas na `JA`.
    Met `--dry-run` wordt er nooit geschreven. Posts i.p.v. pagina's: `--kind posts`.
+
+Let op: een lege `_yoast_wpseo_title` betekent dat Yoast het sjabloon gebruikt ("%%title%% - %%sitename%%", dus
+"Contact - CI Engineers"). Een title schrijven overschrijft dat sjabloon voor die pagina; een description schrijven
+vult het veld dat nu op veel pagina's leeg is.
 
 ## Wekelijks draaien (Taakplanner)
 `run_weekly.ps1` draait alle modules na elkaar en schrijft het rapport. Eenmalig registreren (pas het pad aan):
@@ -83,5 +86,6 @@ wp/mu-plugins/          PHP-snippet om Yoast/Rank Math-velden via REST schrijfba
 tests/                  pytest (zonder netwerk), fixtures voor --dry-run
 data/results/           JSONL per run (gitignored)
 data/reports/           markdown-rapporten (gitignored)
+setup.ps1               eenmalige installatie (venv, .env, tests)
 run_weekly.ps1          alles achter elkaar draaien (Taakplanner)
 ```

@@ -77,3 +77,54 @@ def load_runs(prefix: str, n: int = 2, results_dir: Path | None = None) -> list[
         if m:
             runs.append((date.fromisoformat(m.group(1)), read_jsonl(p)))
     return runs
+
+
+# ---------------------------------------------------------------- .env-check
+ENV_KEYS: dict[str, list[str]] = {
+    "ai_visibility (minimaal één provider)": ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY"],
+    "search_console": ["GSC_SERVICE_ACCOUNT_FILE", "GSC_SITE_URL"],
+    "wp_client (schrijven)": ["WP_USERNAME", "WP_APP_PASSWORD"],
+    "report --email": ["SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD", "REPORT_EMAIL_TO"],
+}
+
+
+def missing_keys(env: dict[str, str]) -> dict[str, list[str]]:
+    """Per module de ontbrekende .env-sleutels (lege waarde telt als ontbrekend).
+    Voor ai_visibility geldt: één provider is genoeg."""
+    out: dict[str, list[str]] = {}
+    for module, keys in ENV_KEYS.items():
+        missing = [k for k in keys if not (env.get(k) or "").strip()]
+        if module.startswith("ai_visibility") and len(missing) < len(keys):
+            missing = []
+        if module == "search_console" and "GSC_SERVICE_ACCOUNT_FILE" not in missing:
+            path = Path(env["GSC_SERVICE_ACCOUNT_FILE"])
+            if not (path if path.is_absolute() else ROOT / path).exists():
+                missing.append("GSC_SERVICE_ACCOUNT_FILE (bestand niet gevonden)")
+        out[module] = missing
+    return out
+
+
+def check_env() -> bool:
+    """Print per module of de .env compleet is; True als alles klaarstaat."""
+    import os
+
+    env_file = ROOT / ".env"
+    print(f".env: {'gevonden' if env_file.exists() else 'ONTBREEKT (kopieer .env.example naar .env)'}")
+    report = missing_keys(dict(os.environ))
+    for module, missing in report.items():
+        mark = "✔" if not missing else "✘"
+        print(f"{mark} {module:38s} {'klaar' if not missing else 'ontbreekt: ' + ', '.join(missing)}")
+    print("Modules seo_audit en wp_client (lezen) hebben geen keys nodig.")
+    return not any(report.values())
+
+
+if __name__ == "__main__":
+    import argparse
+
+    utf8_console()
+    ap = argparse.ArgumentParser(description="Gedeelde helpers; --check-env controleert de .env")
+    ap.add_argument("--check-env", action="store_true")
+    args = ap.parse_args()
+    if args.check_env:
+        sys.exit(0 if check_env() else 1)
+    ap.print_help()
