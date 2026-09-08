@@ -14,10 +14,13 @@ def test_delta_formats():
 
 def test_build_report_with_samples_and_trends():
     md = build_report(*sample_runs(), day=date(2026, 9, 8))
-    assert md.startswith("# Weekrapport CI Search Manager — 2026-09-08")
-    assert "## AI-zichtbaarheid" in md and "| openai |" in md and "▲" in md
-    assert "## SEO-audit" in md and "Pagina's zonder meta description" in md
-    assert "## Google Search Console" in md and "ci engineers" in md
+    assert md.startswith("# Online zichtbaarheid CI-Engineers — weekrapport 08-09-2026")
+    assert "## In het kort" in md and "**AI-assistenten**" in md and "**Google**" in md and "**Website**" in md
+    assert "## Wat gaan we doen" in md and "1. **" in md
+    assert "### Wat AI-assistenten over ons zeggen" in md and "| ChatGPT (OpenAI) |" in md and "▲" in md
+    assert "### Hoe onze website ervoor staat" in md and "korte omschrijving" in md
+    assert "### Hoe Google ons vindt" in md and "ci engineers" in md
+    assert "## Uitleg van de termen" in md
 
 
 def test_build_report_without_data():
@@ -32,7 +35,7 @@ def test_graph_message_payload():
 
     p = graph_message("# Rapport", "Onderwerp", "a@ci-engineers.com, b@ci-engineers.com", "weekrapport.md")
     m = p["message"]
-    assert m["subject"] == "Onderwerp" and m["body"]["content"] == "# Rapport"
+    assert m["subject"] == "Onderwerp" and m["body"]["contentType"] == "HTML" and "<h1" in m["body"]["content"]
     assert [r["emailAddress"]["address"] for r in m["toRecipients"]] == ["a@ci-engineers.com", "b@ci-engineers.com"]
     att = m["attachments"][0]
     assert att["name"] == "weekrapport.md"
@@ -60,10 +63,10 @@ def test_ai_section_excludes_error_rows():
              "error": "404 NOT_FOUND model niet beschikbaar"} for _ in range(3)]
     rows += [{"provider": "openai", "tag": "personeel", "brand_mentioned": True, "competitors_mentioned": []}]
     md = "\n".join(ai_section((date(2026, 9, 8), rows), None))
-    assert "| gemini | geen antwoorden ⚠ 3 fouten |" in md
-    assert "| openai | 1/1 (100%) |" in md
-    assert "3 vragen gaven een fout" in md and "404 NOT_FOUND" in md
-    assert "Doelgroep *personeel*: genoemd in 1/1" in md
+    assert "| Gemini (Google) | geen antwoorden ⚠ 3 storingen |" in md
+    assert "| ChatGPT (OpenAI) | 1 van 1 (100%) |" in md
+    assert "3 vragen konden niet gesteld worden" in md and "404 NOT_FOUND" in md
+    assert "Vragen van sollicitanten: genoemd in 1 van 1" in md
 
 
 def test_graph_error_text_and_hint():
@@ -79,3 +82,42 @@ def test_graph_error_text_and_hint():
     assert msg.startswith("invalid_request: AADSTS90002")
     assert "MS_TENANT_ID" in graph_hint(msg)
     assert graph_hint("iets anders") == ""
+
+
+def test_actions_and_summary_from_data():
+    from datetime import date
+
+    from src.report import actions_section, summary_section
+
+    seo = [{"url": "https://ci-engineers.com/contact/", "status": 200, "meta_description": "", "h1": [], "issues": ["x"],
+            "images_without_alt": 2, "load_ms": 100},
+           {"url": "https://ci-engineers.com/2026/07/nieuws/", "status": 200, "meta_description": "", "h1": ["k"],
+            "issues": ["x"], "images_without_alt": 0, "load_ms": 100}]
+    gsc = [{"dimensions": "query", "query": "ingenieursbureau", "clicks": 0, "impressions": 22, "ctr": 0.0,
+            "position": 49.8, "period_start": "2026-08-09", "period_end": "2026-09-05", "page": None},
+           {"dimensions": "query", "query": "civieltechnisch ingenieursbureau", "clicks": 0, "impressions": 4, "ctr": 0.0,
+            "position": 6.0, "period_start": "2026-08-09", "period_end": "2026-09-05", "page": None},
+           {"dimensions": "page", "page": "https://ci-engineers.com/contact/", "clicks": 0, "impressions": 30, "ctr": 0.0,
+            "position": 40.0, "period_start": "2026-08-09", "period_end": "2026-09-05", "query": None}]
+    ai = [{"provider": "openai", "tag": "opdrachtgever", "brand_mentioned": False, "competitors_mentioned": ["Sweco"]}]
+    run = date(2026, 9, 8)
+    acts = "\n".join(actions_section((run, ai), (run, seo), (run, gsc)))
+    assert "Korte omschrijvingen schrijven** voor 2 pagina's" in acts
+    assert acts.index("/contact/") < acts.index("/2026/07/nieuws/")  # pagina met impressies eerst
+    assert "Kansrijke zoekwoorden" in acts and "civieltechnisch ingenieursbureau" in acts
+    assert "AI-assistenten ons kennen" in acts and "Sweco" in acts
+    assert "Hoofdkop toevoegen** op 1 pagina " in acts
+    summ = "\n".join(summary_section((run, ai), None, (run, seo), None, (run, gsc), None))
+    assert "niet één keer genoemd" in summ and "plek 43.1" in summ and "pagina 5 van Google" in summ
+    assert "2 pagina's missen" in summ
+
+
+def test_md_to_html_tables_lists_and_trend_colors():
+    from src.report import md_to_html
+
+    md = "# Titel\n\n## Kop\n\n- punt **vet** [link](https://x.nl)\n\n1. actie\n\n| A | B |\n|---|---|\n| 1 | +2 ▲ |\n"
+    h = md_to_html(md)
+    assert "<h1" in h and "<h2" in h and "<ul" in h and "<ol" in h and "<table" in h
+    assert "<strong>vet</strong>" in h and 'href="https://x.nl"' in h
+    assert "#1a7f37" in h  # groen voor ▲
+    assert "<script" not in h
