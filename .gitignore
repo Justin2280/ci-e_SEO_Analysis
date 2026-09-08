@@ -1,8 +1,6 @@
 .env
 .venv/
 __pycache__/
-data/results/*.jsonl
-data/reports/*.md
-config/*service-account*.json
 .pytest_cache/
+config/*service-account*.json
 data/run_weekly.log

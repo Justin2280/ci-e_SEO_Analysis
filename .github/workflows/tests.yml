@@ -1,0 +1,26 @@
+# Tests en dry-runs bij elke push en pull request (geen API-calls, geen secrets nodig).
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest -q
+      - name: Dry-runs van alle modules
+        run: |
+          python -m src.ai_visibility --dry-run
+          python -m src.seo_audit --dry-run
+          python -m src.search_console --dry-run
+          python -m src.report --dry-run

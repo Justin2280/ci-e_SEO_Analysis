@@ -60,7 +60,27 @@ Let op: een lege `_yoast_wpseo_title` betekent dat Yoast het sjabloon gebruikt (
 "Contact - CI Engineers"). Een title schrijven overschrijft dat sjabloon voor die pagina; een description schrijven
 vult het veld dat nu op veel pagina's leeg is.
 
-## Wekelijks draaien (Taakplanner)
+## Draaien via GitHub Actions (aanbevolen, niets lokaal nodig)
+`.github/workflows/weekly.yml` draait elke maandagochtend alle modules en commit de resultaten (`data/results/`,
+`data/reports/`) terug in de repo. Het weekrapport staat dan in `data/reports/weekrapport-YYYY-MM-DD.md` en als
+artifact bij de run. Handmatig starten: **Actions → Weekly run → Run workflow**.
+
+Eenmalig instellen in GitHub → **Settings → Secrets and variables → Actions → Repository secrets**:
+
+| Secret | Inhoud |
+|---|---|
+| `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY` | API-keys; weglaten = provider overslaan |
+| `GSC_SERVICE_ACCOUNT_JSON` | de **volledige inhoud** van het service-account-JSON-bestand (open het in Kladblok, alles kopiëren) |
+| `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD`, `REPORT_EMAIL_FROM`, `REPORT_EMAIL_TO` | alleen als het rapport gemaild moet worden |
+
+Optioneel onder het tabblad **Variables**: `GSC_SITE_URL` (standaard `sc-domain:ci-engineers.com`), `OPENAI_MODEL`,
+`ANTHROPIC_MODEL`, `GEMINI_MODEL`, `SMTP_PORT`.
+
+Let op: de resultaten (AI-antwoorden, GSC-cijfers) komen in de repo te staan; houd de repo dus privé.
+De WordPress-inloggegevens zijn hier niet nodig: SEO-teksten schrijven blijft een handmatige actie met bevestiging.
+`.github/workflows/tests.yml` draait bij elke push en PR de tests en dry-runs.
+
+## Wekelijks draaien op je eigen pc (alternatief, Taakplanner)
 `run_weekly.ps1` draait alle modules na elkaar en schrijft het rapport. Eenmalig registreren (pas het pad aan):
 ```powershell
 schtasks /Create /TN "CI Search Manager" /SC WEEKLY /D MON /ST 07:00 `
@@ -84,8 +104,9 @@ src/wp_client.py        module 4  WordPress REST + SEO-metavelden
 src/report.py           module 5  weekrapport (+ e-mail)
 wp/mu-plugins/          PHP-snippet om Yoast/Rank Math-velden via REST schrijfbaar te maken
 tests/                  pytest (zonder netwerk), fixtures voor --dry-run
-data/results/           JSONL per run (gitignored)
-data/reports/           markdown-rapporten (gitignored)
+data/results/           JSONL per run (door de workflow gecommit)
+data/reports/           markdown-rapporten (door de workflow gecommit)
+.github/workflows/      weekly.yml (wekelijkse run) en tests.yml (pytest + dry-runs)
 setup.ps1               eenmalige installatie (venv, .env, tests)
 run_weekly.ps1          alles achter elkaar draaien (Taakplanner)
 ```

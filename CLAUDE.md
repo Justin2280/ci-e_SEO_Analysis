@@ -28,7 +28,8 @@ Elke rij heeft `ts` en `module`. Meerdere runs op één dag worden aan hetzelfde
 - Nooit content op de live site wijzigen zonder expliciete bevestiging; eerst een diff/preview tonen
   (`write_seo_meta(confirm=True)` pas na `JA` in de CLI).
 - API-keys alleen via .env (python-dotenv). Nooit hardcoden, nooit committen. Service-account-JSON staat in .gitignore.
-- Resultaten als JSONL in data/results/ zodat trends over tijd te plotten zijn.
+- Resultaten als JSONL in data/results/ zodat trends over tijd te plotten zijn. De GitHub Actions-workflow
+  (.github/workflows/weekly.yml) commit data/results/ en data/reports/ terug naar de repo; lokaal hoeft niets te draaien.
 - Houd het simpel: standaardbibliotheek + requests + officiële SDK's. Geen frameworks tenzij nodig.
 - Elke module heeft `--dry-run` zonder API-calls; test daarmee voor je echte calls doet.
 - `python -m pytest` moet groen blijven (tests zonder netwerk; pure functies testen, netwerk-wrappers apart houden).
