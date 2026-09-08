@@ -22,7 +22,8 @@ Justin werkt op **Windows** (PowerShell): instructies daarop richten; code blijf
 
 Gedeeld: `src/common.py` (ROOT/RESULTS/REPORTS, `save_jsonl`, `load_runs`, `utf8_console`).
 JSONL-naamgeving: `data/results/<module>-YYYY-MM-DD.jsonl`; ai_visibility gebruikt het oude `YYYY-MM-DD.jsonl`.
-Elke rij heeft `ts` en `module`. Meerdere runs op één dag worden aan hetzelfde bestand toegevoegd (append).
+Elke rij heeft `ts` en `module`. Eén bestand = één run: een herhaalde run op dezelfde dag **overschrijft** het
+dagbestand (append gaf dubbeltellingen in het weekrapport). Het rapport vergelijkt met de vorige dag met data.
 
 ## Regels
 - Nooit content op de live site wijzigen zonder expliciete bevestiging; eerst een diff/preview tonen

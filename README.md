@@ -64,7 +64,8 @@ vult het veld dat nu op veel pagina's leeg is.
 ## Draaien via GitHub Actions (aanbevolen, niets lokaal nodig)
 `.github/workflows/weekly.yml` draait elke maandagochtend alle modules en commit de resultaten (`data/results/`,
 `data/reports/`) terug in de repo. Het weekrapport staat dan in `data/reports/weekrapport-YYYY-MM-DD.md` en als
-artifact bij de run. Handmatig starten: **Actions → Weekly run → Run workflow**.
+artifact bij de run. Handmatig starten: **Actions → Weekly run → Run workflow**. Een herhaalde run op dezelfde dag
+vervangt de resultaten van die dag (dus geen dubbele cijfers in het rapport).
 
 Eenmalig instellen in GitHub → **Settings → Secrets and variables → Actions → Repository secrets**:
 
