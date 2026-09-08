@@ -36,7 +36,8 @@ Lukt een `.ps1` niet (execution policy)? Eenmalig: `Set-ExecutionPolicy -Scope C
 | GSC_SERVICE_ACCOUNT_FILE + GSC_SITE_URL | zie hieronder | Search Console-data |
 | MS_TENANT_ID + MS_CLIENT_ID + MS_CLIENT_SECRET (of SMTP_*) + REPORT_EMAIL_* | Microsoft Entra, zie *Rapport mailen* | alleen `python -m src.report --email` |
 
-Modelnamen staan in `.env` — controleer of ze nog actueel zijn bij de providers.
+Modelnamen staan in `.env` (lokaal) of als Variables in GitHub — controleer ze bij de providers als een module
+fouten geeft. Voorbeeld: `gemini-2.5-flash` gaf in september 2026 een 404 ("no longer available"), nu `gemini-3.6-flash`.
 
 ### Google Search Console (module 3)
 1. console.cloud.google.com → project aanmaken → **APIs & Services → Enable** → "Google Search Console API".
