@@ -14,26 +14,21 @@ Gebruik:
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
 import sys
-from datetime import date, datetime, timezone
 from pathlib import Path
 
 import yaml
-from dotenv import load_dotenv
 
-ROOT = Path(__file__).resolve().parent.parent
+from src.common import ROOT, now_iso, save_jsonl, utf8_console
+
 CONFIG = ROOT / "config" / "queries.yaml"
-RESULTS = ROOT / "data" / "results"
 
 SYSTEM_PROMPT = (
     "Je bent een behulpzame assistent. Beantwoord de vraag zoals je dat voor een "
     "gewone gebruiker zou doen: noem concrete bedrijfsnamen waar je die kent."
 )
-
-load_dotenv(ROOT / ".env")
 
 
 # ---------------------------------------------------------------- providers
@@ -114,7 +109,8 @@ def run(providers: list[str], dry_run: bool) -> list[dict]:
                     answer = ""
                     print(f"[error] {prov} / {q[:50]}…: {e}", file=sys.stderr)
             rows.append({
-                "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                "ts": now_iso(),
+                "module": "ai_visibility",
                 "provider": prov,
                 "tag": item["tag"],
                 "query": q,
@@ -127,12 +123,7 @@ def run(providers: list[str], dry_run: bool) -> list[dict]:
 
 
 def save(rows: list[dict]) -> Path:
-    RESULTS.mkdir(parents=True, exist_ok=True)
-    out = RESULTS / f"{date.today().isoformat()}.jsonl"
-    with out.open("a", encoding="utf-8") as f:
-        for r in rows:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    return out
+    return save_jsonl(rows, "ai_visibility")
 
 
 def summary(rows: list[dict]) -> None:
@@ -151,6 +142,7 @@ def summary(rows: list[dict]) -> None:
 
 
 if __name__ == "__main__":
+    utf8_console()
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--providers", default=",".join(PROVIDERS),
