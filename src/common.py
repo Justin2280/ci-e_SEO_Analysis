@@ -120,7 +120,12 @@ def check_env() -> bool:
     env_file = ROOT / ".env"
     print(f".env: {'gevonden' if env_file.exists() else 'ONTBREEKT (kopieer .env.example naar .env)'}")
     report = missing_keys(dict(os.environ))
+    in_actions = bool(os.getenv("GITHUB_ACTIONS"))
     for module, missing in report.items():
+        if in_actions and module.startswith("wp_client"):
+            print(f"– {module:38s} niet nodig in GitHub Actions (alleen lokaal, schrijven gebeurt handmatig)")
+            report[module] = []
+            continue
         mark = "✔" if not missing else "✘"
         print(f"{mark} {module:38s} {'klaar' if not missing else 'ontbreekt: ' + ', '.join(missing)}")
     print("Modules seo_audit en wp_client (lezen) hebben geen keys nodig.")

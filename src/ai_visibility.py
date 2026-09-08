@@ -17,6 +17,7 @@ import argparse
 import os
 import re
 import sys
+import time
 from pathlib import Path
 
 import yaml
@@ -75,6 +76,30 @@ PROVIDERS = {
 }
 
 
+# ---------------------------------------------------------------- retry
+TRANSIENT_MARKERS = ("503", "429", "unavailable", "resource_exhausted", "overloaded", "rate limit", "high demand")
+
+
+def is_transient(exc: Exception) -> bool:
+    """Tijdelijke providerfout (drukte, rate limit) die een retry waard is?"""
+    msg = str(exc).lower()
+    return any(m in msg for m in TRANSIENT_MARKERS)
+
+
+def ask_with_retry(fn, question: str, attempts: int = 3, delays=(5, 15, 30), sleep=time.sleep) -> str:
+    """Roept fn(question) aan en probeert bij tijdelijke fouten opnieuw met oplopende wachttijd."""
+    for i in range(attempts):
+        try:
+            return fn(question)
+        except Exception as e:
+            if not is_transient(e) or i == attempts - 1:
+                raise
+            wait = delays[min(i, len(delays) - 1)]
+            print(f"[retry] {question[:40]}…: {str(e)[:60]} — opnieuw over {wait}s", file=sys.stderr)
+            sleep(wait)
+    raise RuntimeError("onbereikbaar")
+
+
 # ---------------------------------------------------------------- analyse
 def mentioned(text: str, names: list[str]) -> list[str]:
     """Geeft de namen terug die (hoofdletterongevoelig, als los woord) in text voorkomen."""
@@ -105,7 +130,7 @@ def run(providers: list[str], dry_run: bool) -> list[dict]:
                 answer = f"(dry-run) Voorbeeldantwoord waarin Sweco en CI-Engineers genoemd worden."
             else:
                 try:
-                    answer = fn(q)
+                    answer = ask_with_retry(fn, q)
                 except Exception as e:  # provider-fout mag de run niet stoppen
                     answer, error = "", str(e)[:200]
                     print(f"[error] {prov} / {q[:50]}…: {e}", file=sys.stderr)
