@@ -67,7 +67,7 @@ en `/ons-team/` (240, positie 7,5 en 9 klikken) zijn verloren bezoekers.
 
 ### 2. Testbericht "Hello world!" verwijderen
 
-- [ ] WordPress → Berichten → "Hello world!" → Prullenbak (en prullenbak legen)
+- [x] WordPress → Berichten → "Hello world!" → Prullenbak (en prullenbak legen)
 - [ ] Categorie "Uncategorized" hernoemen naar "Nieuws" of leeg laten (dan verdwijnt het archief vanzelf)
 
 ### 3. Archiefpagina's uit Google houden
@@ -80,10 +80,10 @@ de echte pagina's `/projecten/` en `/nieuws/`.
 - `/author/ci-engineers/`
 
 **Hoe (Yoast):** SEO → Instellingen →
-- [ ] Taxonomieën → Categorieën: "Toon categorieën in zoekresultaten" **uit**
-- [ ] Taxonomieën → Tags: **uit**
-- [ ] Geavanceerd → Auteursarchieven: **uitschakelen** (één auteur, geen meerwaarde)
-- [ ] Controle: `/sitemap_index.xml` bevat daarna geen category-/tag-/author-sitemaps meer
+- [x] Taxonomieën → Categorieën: "Toon categorieën in zoekresultaten" **uit**
+- [x] Taxonomieën → Tags: **uit**
+- [x] Geavanceerd → Auteursarchieven: **uitschakelen** (één auteur, geen meerwaarde)
+- [x] Controle: `/sitemap_index.xml` bevat daarna geen category-/tag-/author-sitemaps meer
 
 ### 4. H1-koppen instellen (11 pagina's)
 
@@ -104,10 +104,10 @@ tabblad Inhoud → *HTML-tag* → **H1**. De tekst hoeft niet te veranderen; kle
 | `/nieuws/ci-engineers-is-lid-geworden-van-nlingenieurs/` | CI-engineers is lid geworden van NLingenieurs | (zelfde tekst, alleen H1 maken — in het bericht-template) |
 | `/privacy-policy/` | Privacy Statement vanCI-Engineers b.v | Privacyverklaring CI-Engineers B.V. (spatie ontbreekt nu) |
 
-- [ ] 11 koppen omgezet naar H1
-- [ ] **Header-template:** de tekst "Menu" is nu een H2 op elke pagina → HTML-tag op `div` of `span` zetten
+- [x] 11 koppen omgezet naar H1
+- [x] **Header-template:** de tekst "Menu" is nu een H2 op elke pagina → HTML-tag op `div` of `span` zetten
       (Elementor → Templates → Theme Builder → Header)
-- [ ] Nieuwsbericht-template (Theme Builder → Single Post): titel-widget op H1, zodat toekomstige berichten goed staan
+- [x] ~~Nieuwsbericht-template~~ — er is geen Single Post-template; nieuwsberichten zijn losse Elementor-pagina's. Bij elk nieuw bericht zelf de kop op H1 zetten.
 
 ---
 
@@ -119,8 +119,8 @@ tabblad Inhoud → *HTML-tag* → **H1**. De tekst hoeft niet te veranderen; kle
 
 **Eerst de template (lost 114 gevallen in één keer op):** deze 2 afbeeldingen staan op álle 57 pagina's:
 
-- [ ] `Logo-CI-Engineers-1.png` → alt: `CI-Engineers logo`
-- [ ] `koninklijke-nlingenieurs.png` → alt: `Lid van Koninklijke NLingenieurs`
+- [x] `Logo-CI-Engineers-1.png` → alt: `CI-Engineers logo`
+- [x] `koninklijke-nlingenieurs.png` → alt: `Lid van Koninklijke NLingenieurs`
 
 **Daarna de Mediabibliotheek:** WordPress → Media → per afbeelding het veld *Alternatieve tekst* invullen.
 Elementor neemt die tekst automatisch over. Beschrijf wat er te zien is + projectnaam, bijvoorbeeld
@@ -136,12 +136,12 @@ Elementor neemt die tekst automatisch over. Beschrijf wat er te zien is + projec
 De homepage staat gemiddeld op positie 48; voor "ingenieursbureau" (220 vertoningen) op 58 en voor
 "civiel ingenieursbureau" op 22. Het woord *ingenieursbureau* staat niet in de title.
 
-- [ ] Homepage (Yoast-blok onderaan de pagina → SEO-titel):
+- [x] Homepage (Yoast-blok onderaan de pagina → SEO-titel):
       `Civiel ingenieursbureau & detachering | CI-Engineers` (52 tekens)
-- [ ] `/over-ci/`: `Over CI-Engineers | Civiel ingenieursbureau in Nederland`
-- [ ] `/werken-bij-ci/`: `Werken bij CI-Engineers | Vacatures civiele techniek`
+- [x] `/over-ci/`: `Over CI-Engineers | Civiel ingenieursbureau in Nederland`
+- [x] `/werken-bij-ci/`: `Werken bij CI-Engineers | Vacatures civiele techniek`
       (zoekterm "civiele techniek banen" en "ontwerper civiele techniek vacatures" hebben nu geen passende pagina)
-- [ ] Te lange title inkorten: `/projecten/ondergrondse-verbindingen-realisatie-toegangstunnels-kelder-thi/`
+- [x] Te lange title inkorten: `/projecten/ondergrondse-verbindingen-realisatie-toegangstunnels-kelder-thi/`
       (79 tekens) → `Toegangstunnels kelder THI | CI-Engineers`
 
 ### 7. Vacatures in Google for Jobs (JobPosting-schema)
@@ -149,11 +149,11 @@ De homepage staat gemiddeld op positie 48; voor "ingenieursbureau" (220 vertonin
 De 4 vacaturepagina's hebben nu alleen algemeen *WebPage*-schema. Met *JobPosting*-schema kunnen ze in het
 vacatureblok bovenaan Google verschijnen — gratis extra zichtbaarheid bij de tweede doelgroep (personeel).
 
-- [ ] Kiezen: plugin (bijv. *WP Job Openings*, of Yoast "Job Posting"-blok als dat in de licentie zit)
+- [x] Kiezen: plugin (bijv. *WP Job Openings*, of Yoast "Job Posting"-blok als dat in de licentie zit)
       of per vacature een JSON-LD-blok in een Elementor *HTML*-widget
-- [ ] Verplichte velden per vacature: titel, omschrijving, datum geplaatst, geldig tot, werkgever
+- [x] Verplichte velden per vacature: titel, omschrijving, datum geplaatst, geldig tot, werkgever
       (CI-Engineers B.V. + logo), locatie, dienstverband; salarisindicatie sterk aanbevolen
-- [ ] Controleren met Google Rich Results Test (search.google.com/test/rich-results)
+- [x] Controleren met Google Rich Results Test (search.google.com/test/rich-results)
 - [ ] Verlopen vacatures offline halen of `validThrough` bijwerken (anders waarschuwing in Search Console)
 
 ### 8. Trage pagina's (lage prioriteit)
@@ -246,12 +246,44 @@ AI-assistenten baseren zich op wat er óver een bedrijf op andere sites staat.
 
 - [ ] **Google Bedrijfsprofiel** aanmaken/controleren (naam, adres, telefoon, categorie "Ingenieursbureau", foto's)
 - [ ] Bedrijfsgegevens overal identiek: website, LinkedIn, KvK, NLingenieurs-ledenlijst, Google Bedrijfsprofiel
-- [ ] Yoast → Instellingen → Site-representatie: organisatienaam, logo en profielen (LinkedIn) invullen
+- [x] Yoast → Instellingen → Site-representatie: organisatienaam, logo en profielen (LinkedIn) invullen
       (komt dan in het Organization-schema op elke pagina)
 - [ ] Vermelding op NLingenieurs-ledenoverzicht met link naar ci-engineers.com controleren
 - [ ] Opdrachtgevers/partners vragen om projectvermelding met link (bijv. bij een gezamenlijk project)
-- [ ] Optioneel: `llms.txt` in de root van de site (korte samenvatting voor AI-crawlers: wie, wat, diensten, contact)
+- [x] Optioneel: `llms.txt` in de root van de site (korte samenvatting voor AI-crawlers: wie, wat, diensten, contact)
 - [ ] `config/queries.yaml` aanvullen met de echte zoektermen uit de tabel bij taak 9
+
+---
+
+## Status na controle op 2026-09-23 (avond)
+
+Live gecontroleerd met een nieuwe scan (51 NL-pagina's, was 57 doordat de archieven uit de sitemap zijn):
+
+| Signaal | Ochtend | Nu |
+|---|---:|---:|
+| Issues (NL) | 101 | 72 |
+| Pagina's zonder H1 (NL) | 11 | **0** |
+| Afbeeldingen zonder alt (NL) | 327 | 119 |
+| Sitemaps | post, page, category, tag, author | post, page |
+| JobPosting-schema op vacatures | 0 | 4 (geldig, `validThrough` 2027-03-31) |
+| llms.txt | 404 | aanwezig (Yoast) |
+
+Geverifieerd: "Hello world!" geeft 404; `/category/…` en `/tag/…` staan op `noindex, follow`; `/author/…` redirect naar home;
+nieuwe titles staan live (home 52 tekens, over-ci 56, werken-bij 52, THI 41); "Menu" in de header is H6;
+Yoast Organization-schema bevat LinkedIn.
+
+**Bewust niet gedaan (besluit Justin):** taak 1 redirects, taak 8 LiteSpeed/compressie.
+Let op bij taak 1: de 404's blijven vertoningen kosten zolang Google de oude URL's toont; `/ons-team/` stond op positie 7,5.
+
+**Nog open, in volgorde:**
+1. Alt-teksten projectfoto's (119 over, verspreid over de projectpagina's en `/projecten/`) — taak 5
+2. Nieuwe pagina's Diensten en Detachering — taak 9
+3. 19 dunne projectpagina's aanvullen — taak 10
+4. Nieuws bijhouden — taak 11
+5. Google Bedrijfsprofiel, NLingenieurs-vermelding, partnerlinks — fase 4
+6. Klein: prullenbak legen, categorie "Uncategorized" hernoemen, salarisindicatie in JobPosting toevoegen,
+   `validThrough` vóór 31-03-2027 verlengen, homepage-H1 "COMPLEXE<br>CIVIELE" (regelafbreking zonder spatie; Google leest "COMPLEXECIVIELE" → spatie vóór de `<br>` zetten)
+7. `config/queries.yaml` aanvullen met echte zoektermen (repo)
 
 ---
 
@@ -268,9 +300,9 @@ AI-assistenten baseren zich op wat er óver een bedrijf op andere sites staat.
 | Signaal | Nu | Doel over 3 maanden |
 |---|---|---|
 | 404's met vertoningen in Search Console | 22 URL's | 0 |
-| Pagina's zonder H1 (NL) | 11 | 0 |
-| Afbeeldingen zonder alt (NL) | 327 | < 20 |
+| Pagina's zonder H1 (NL) | 11 → 0 (23-09) | 0 |
+| Afbeeldingen zonder alt (NL) | 327 → 119 (23-09) | < 20 |
 | Positie "civiel ingenieursbureau" | 22 | top 10 |
 | Positie "ingenieursbureau civiele techniek" | 34 | top 20 |
-| Vacatures zichtbaar in Google for Jobs | 0 | 4 |
+| Vacatures met geldig JobPosting-schema | 0 → 4 (23-09) | 4 zichtbaar in Google for Jobs |
 | AI-antwoorden die CI-Engineers noemen | 0 / 30 | ≥ 3 / 30 |
