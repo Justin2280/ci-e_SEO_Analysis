@@ -10,6 +10,9 @@ Justin werkt op **Windows** (PowerShell): instructies daarop richten; code blijf
   (2) potentieel personeel (constructeurs, projectleiders, tekenaars) dat een werkgever zoekt.
 - Site: WordPress 7 op Hostinger, thema Elementor, SEO-plugin **Yoast SEO** (sitemap op /sitemap_index.xml,
   `yoast_head_json` publiek in de REST API). Koppeling via WP REST API met application password (src/wp_client.py).
+- Claude Code-plugin `hostinger@claude-plugins-official` staat aan in `.claude/settings.json` (Hostinger MCP: WordPress,
+  DNS, domeinen). Eerste gebruik: inloggen via OAuth of `HOSTINGER_API_TOKEN` uit hPanel. De regel "nooit live wijzigen
+  zonder bevestiging" geldt ook voor deze tools.
 
 ## Modules
 1. `src/ai_visibility.py` — DONE. Stelt vragen aan OpenAI/Claude/Gemini, logt of CI-Engineers genoemd wordt.
