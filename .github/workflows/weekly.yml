@@ -100,7 +100,9 @@ jobs:
 
       - name: Rapport mailen
         # Mailen mag het bewaren van resultaten nooit blokkeren: aparte stap, fout is niet fataal.
-        if: inputs.email != false && (env.MS_TENANT_ID != '' || env.SMTP_HOST != '')
+        # Bij een geplande run is `inputs` leeg; `inputs.email != false` is dan ook onwaar (leeg == false),
+        # daarom alleen bij een handmatige run naar het vinkje kijken.
+        if: (github.event_name != 'workflow_dispatch' || inputs.email) && (env.MS_TENANT_ID != '' || env.SMTP_HOST != '')
         continue-on-error: true
         run: python -m src.report --email-only
 
